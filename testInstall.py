@@ -17,8 +17,8 @@ print("\n\nNum of times 'whale' occurs:\t%d\n\n" %fdist1['whale'])
 
 
 X = [[0, 0], [1, 1]]
-y = [0, 1]
-clf = svm.SVC()
+y = [0.2, 2.5]
+clf = svm.SVR()
 
 print(clf)
 
