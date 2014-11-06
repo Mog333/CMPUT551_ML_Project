@@ -3,19 +3,130 @@
 
 import numpy as np
 from sklearn import svm
+import nltk
+
+#
+#  pipeline approach: make functions chainable (processPunct(processEmoticons( . . .)))
+#  process functions take string (tweet) - return processed tweet
+#  dictionary functions take an existing dictionary, a set of tweets, and parameters and returns the dictionary with new features added
+#  feature functions take tweet, its current feature vector, a dictionary, and parameters and returns its modified feature vector 
+#
+
+def main():
+   uniModel = trainUnigramModel("small_tweets2.txt","small_score2.txt")
+   uniBiTriModel = trainUniBiTrigramModel("small_tweets2.txt","small_score2.txt")
+   s1 = "test tweet text"
+   s2 = "rob tests tweets"
+   s3 = "rob is silly"
 
 
+   #Unigram model prediction:
+   
+   uniModelVec1 = np.zeros(len(uniModel[2]))
+   uniModelVec2 = np.zeros(len(uniModel[2]))
+   uniModelVec3 = np.zeros(len(uniModel[2]))
+  
+   uniModelVec1 = setFeatureVecForNGram(s1, uniModelVec1, uniModel[2], 1)
+   uniModelVec2 = setFeatureVecForNGram(s2, uniModelVec2, uniModel[2], 1)
+   uniModelVec3 = setFeatureVecForNGram(s3, uniModelVec3, uniModel[2], 1)
 
-def main():   
-   tws = getTweetsFromFile("tweet.txt")
-   scoreColumn = getTweetScoresFromFile("score.txt")
-   d = buildBOWDictFromTweets(tws)
-   fm = getFeatureMatrix(tws, d)
+   uniP1 = uniModel[3].predict(uniModelVec1)
+   uniP2 = uniModel[3].predict(uniModelVec2)
+   uniP3 = uniModel[3].predict(uniModelVec3)
+
+   print("Test Unigram Prediction: \n")
+   print("tweet: '" + s1 + "' prediction: " + str(uniP1))
+   print("tweet: '" + s2 + "' prediction: " + str(uniP2))
+   print("tweet: '" + s3 + "' prediction: " + str(uniP3))
+
+   
+   UBT_vec1 = np.zeros(len(uniBiTriModel[2]))
+   UBT_vec2 = np.zeros(len(uniBiTriModel[2]))
+   UBT_vec3 = np.zeros(len(uniBiTriModel[2]))
+
+   for i in range(1, 4):
+      UBT_vec1 = setFeatureVecForNGram(s1, UBT_vec1, uniBiTriModel[2], i)
+      UBT_vec2 = setFeatureVecForNGram(s2, UBT_vec2, uniBiTriModel[2], i)
+      UBT_vec3 = setFeatureVecForNGram(s3, UBT_vec3, uniBiTriModel[2], i)
+
+   UBT_P1 = uniBiTriModel[3].predict(UBT_vec1)
+   UBT_P2 = uniBiTriModel[3].predict(UBT_vec2)
+   UBT_P3 = uniBiTriModel[3].predict(UBT_vec3)
+   
+   print("\nTest Uni/Bi/Trigram prediction: \n")
+   print("tweet: '" + s1 + "' prediction: " + str(UBT_P1))
+   print("tweet: '" + s2 + "' prediction: " + str(UBT_P2))
+   print("tweet: '" + s3 + "' prediction: " + str(UBT_P3))
+   
+   return (uniModel, uniBiTriModel)
+   
+
+
+def trainUnigramModel(tweetsFile = "tweet.txt", scoreFile = "score.txt"):
+   #get tweets and preprocess
+   tweets = getTweetsFromFile(tweetsFile)
+   scores = getTweetScoresFromFile(scoreFile)
+   
+   #build dictionary
+   bow_dict = {}
+   bow_dict = addNGramToDict(tweets, bow_dict, 1)   
+   
+   #create empty feature vectors
+   featureVectors = createFeatureVectors(tweets, bow_dict)
+
+   #For each feature vector fill it in using dict data
+   for i in range(len(tweets)):
+      featureVectors[i] = setFeatureVecForNGram(tweets[i], featureVectors[i], bow_dict, 1)
+
+   #append vectors together to make the matrix
+   featureMatrix = getFeatureMatrixFromVecs(featureVectors)
+
+   #fit svm model
    clf = svm.SVR()
-   clf.fit(fm, scoreColumn)
+   clf.fit(featureMatrix, scores)
    print("Done fitting")
-   return (tws, scoreColumn, d, clf)
 
+   #return the tweets, scores, dictionary, and model in a tuple
+   return (tweets, scores, bow_dict, clf)   
+
+
+def trainUniBiTrigramModel(tweetsFile = "tweet.txt", scoreFile = "score.txt"):
+   #get tweets and preprocess
+   tweets = getTweetsFromFile(tweetsFile)
+   scores = getTweetScoresFromFile(scoreFile)
+   
+   #build dictionary
+   bow_dict = {}
+   bow_dict = addNGramToDict(tweets, bow_dict, 1)
+   bow_dict = addNGramToDict(tweets, bow_dict, 2)
+   bow_dict = addNGramToDict(tweets, bow_dict, 3)   
+   
+   #create empty feature vectors
+   featureVectors = createFeatureVectors(tweets, bow_dict)
+
+   #For each feature vector fill it in using dict data
+   for i in range(len(tweets)):
+      featureVectors[i] = setFeatureVecForNGram(tweets[i], featureVectors[i], bow_dict, 1)
+      featureVectors[i] = setFeatureVecForNGram(tweets[i], featureVectors[i], bow_dict, 2)
+      featureVectors[i] = setFeatureVecForNGram(tweets[i], featureVectors[i], bow_dict, 3)
+
+   #append vectors together to make the matrix
+   featureMatrix = getFeatureMatrixFromVecs(featureVectors)
+
+   #fit svm model
+   clf = svm.SVR()
+   clf.fit(featureMatrix, scores)
+   print("Done fitting")
+
+   #return the tweets, scores, dictionary, and model in a tuple
+   return (tweets, scores, bow_dict, clf)   
+
+#
+#  Pre processing functions
+#  Place in new file when we have several
+#  pipeline approach: each process funcion takes a string (tweet), processes it somehow, and returns that tweet
+#  processing functions are meant to be chained together
+#
 def preProcess(words):
    words = words.replace('  ', ' ')
    words = words.replace(',', "")
@@ -27,14 +138,10 @@ def preProcess(words):
    return words
    
 
-def getTweetsFromFile(filename):
-   input_file = open(filename, 'r')
-   tweets = []
-   for line in input_file:
-      tweets.append(preProcess(line.lower()))
-   input_file.close()
-   return tweets
-
+#
+#  Unigrams only - First test functions
+#  Remove eventually - ngrams / pipeline approach will replace these
+#
 
 def buildBOWDictFromTweets(tweetList):
    bow_dict = {}
@@ -42,9 +149,9 @@ def buildBOWDictFromTweets(tweetList):
    for tweet in tweetList:
       for word in tweet.split(" "):
          if word in bow_dict:
-            continue
+            bow_dict[word]['count'] += 1
          else:
-            bow_dict[word] = number_unique_words
+            bow_dict[word] = {'index':number_unique_words, 'count':1}
             number_unique_words += 1
    return bow_dict
 
@@ -52,7 +159,7 @@ def getFeatureVec(tweet, bow_dict):
    featureVec = np.zeros(len(bow_dict))
    for word in tweet.split(" "):
       try:
-         index = bow_dict[word]
+         index = bow_dict[word]['index']
          featureVec[index] += 1
       except KeyError:
          continue
@@ -66,6 +173,67 @@ def getFeatureMatrix(tweetList, bow_dict):
       featureMatrix = np.vstack([featureMatrix, v])
 
    return featureMatrix
+#
+#
+#
+
+
+#
+#  N Gram functions
+#
+
+def addNGramToDict(tweetList, bow_dict, gramNum):
+   #adds n grams to dict, where n is specified (gramNum == 1 => unigrams, gramNum == 2 => bigrams)
+   for tweet in tweetList:
+      #for each tweet build a list of grams (ie list of words, or bigrams etc)
+
+      gramList= list(nltk.ngrams(tweet.split(), gramNum))
+      for gram in gramList:
+         if gram in bow_dict:
+            bow_dict[gram]['count'] += 1
+         else:
+            bow_dict[gram] = {'index':len(bow_dict), 'count':1}
+   return bow_dict
+
+def setFeatureVecForNGram(tweet, featureVec, bow_dict, n):
+   gramList = list(nltk.ngrams(tweet.split(), n))
+   for gram in gramList:
+      try:
+         index = bow_dict[gram]['index']
+         featureVec[index] += 1
+      except KeyError:
+         continue
+   
+   return featureVec
+
+def createFeatureVectors(tweetList, bow_dict):
+   #create empty set of zero vectors to work with one for each tweet
+   featureVectors = []
+   for t in tweetList:
+      featureVectors.append(np.zeros(len(bow_dict)))
+
+   return featureVectors
+
+def getFeatureMatrixFromVecs(vectorList):
+   featureMatrix = vectorList[0]
+   for vec in vectorList[1:]:
+      featureMatrix = np.vstack([featureMatrix, vec])
+
+   return featureMatrix
+
+#
+#
+#
+
+
+
+def getTweetsFromFile(filename):
+   input_file = open(filename, 'r')
+   tweets = []
+   for line in input_file:
+      tweets.append(preProcess(line.lower()))
+   input_file.close()
+   return tweets
 
 def getTweetScoresFromFile(filename):
    input_file = open(filename, 'r')
@@ -75,60 +243,6 @@ def getTweetScoresFromFile(filename):
       tweetScores = np.append(tweetScores, score)
    input_file.close()
    return np.transpose(tweetScores)
-
-
-#in_labels = open("small_score.txt", 'r')
-
-#scores = []
-
-#for line in in_labels:
-#   print(line)
-#   line = line.replace('\n', '')
-#   scores.append(line)
-
-#print(scores)
-
-#Y = np.array(scores)
-
-#print(Y)
-#clf = svm.SVR()
-
-#print(clf)
-
-#clf.fit(X, Y)
-
-
-''' testPoint is the tweet "Adam Sankalp" '''
-#testPoint = np.zeros(counter_unique)
-#testPoint[58] = 1
-#testPoint[59] = 1
-#p = clf.predict(testPoint)
-#print("\nPrediction 'Adam Sankalp':")
-#print(p)
-
-
-''' testPoint2 is the tweet "I like Adam and Sankalp" '''
-#testPoint2 = np.zeros(counter_unique)
-#testPoint2[1] = 1
-#testPoint2[18] = 1
-#testPoint2[57] = 1
-#testPoint2[58] = 1
-#testPoint2[59] = 1
-#p = clf.predict(testPoint2)
-#print("\nPrediction 'I like Adam and Sankalp':")
-#print(p)
-
-
-''' testPoint is the tweet "working for 6.5 hours" '''
-#testPoint3 = np.zeros(counter_unique)
-#testPoint3[3] = 1
-#testPoint3[4] = 1
-#testPoint3[5] = 1
-#testPoint3[6] = 1
-#p = clf.predict(testPoint3)
-#print("\nPrediction 'working for 6.5 hours':")
-#print(p)
-
 
 
 

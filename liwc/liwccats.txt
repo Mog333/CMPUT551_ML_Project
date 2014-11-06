@@ -1,0 +1,64 @@
+0	Total function words
+1	Total pronouns
+2	Personal pronouns
+3	1st person singular
+4	1st person plural
+5	Total 2nd person
+6	3rd person singular
+7	3rd person plural
+8	Impersonal pronouns
+9	Articles
+10	Common verbs
+11	Auxiliary verbs
+12	Past tense
+13	Present tense
+14	Future tense
+15	Adverbs
+16	Prepositions
+17	Conjunctions
+18	Negations
+19	Quantifiers
+20	Numbers
+21	Swear words
+22	Social processes
+23	Family
+24	Friends
+25	Humans
+26	Affective processes
+27	Positive emotion
+28	Negative Emotion
+29	Anxiety
+30	Anger
+31	Sadness
+32	Cognitive processes
+33	Insight
+34	Causation
+35	Discrepancy
+36	Tentativeness
+37	Certainty
+38	Inhibition
+39	Inclusion
+40	Exclusion
+41	Perceptual processes
+42	Seeing
+43	Hearing
+44	Feeling
+45	Biological processes
+46	Body
+47	Health
+48	Sexual
+49	Ingestion
+50	Relativity
+51	Motion
+52	Space
+53	Time
+54	Work
+55	Achievement
+56	Leisure
+57	Home
+58	Money
+59	Religion
+60	Death
+61	Assent
+62	Non-fluencies
+63	Fillers
