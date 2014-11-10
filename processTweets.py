@@ -13,8 +13,13 @@ import nltk
 #
 
 def main():
-   uniModel = trainUnigramModel("small_tweets2.txt","small_score2.txt")
-   uniBiTriModel = trainUniBiTrigramModel("small_tweets2.txt","small_score2.txt")
+   train_indices = np.array([0, 1, 2, 3, 4,]) # the indices we use of the data to train. for kfold validation
+
+   # read the tweets and scores from file
+   tweets = getTweetsFromFile("small_tweets2.txt")
+   scores = getTweetScoresFromFile("small_score2.txt")
+   uniModel = trainUnigramModel(train_indices, tweets, scores)
+   uniBiTriModel = trainUniBiTrigramModel(train_indices, tweets, scores)
    s1 = "test tweet text"
    s2 = "rob tests tweets"
    s3 = "rob is silly"
@@ -62,10 +67,10 @@ def main():
    
 
 
-def trainUnigramModel(tweetsFile = "tweet.txt", scoreFile = "score.txt"):
-   #get tweets and preprocess
-   tweets = getTweetsFromFile(tweetsFile)
-   scores = getTweetScoresFromFile(scoreFile)
+def trainUnigramModel(train_indices, tweets, scores):
+   #get tweets to train on
+   tweets = tweets[train_indices]
+   scores = scores[train_indices]
    
    #build dictionary
    bow_dict = {}
@@ -90,10 +95,10 @@ def trainUnigramModel(tweetsFile = "tweet.txt", scoreFile = "score.txt"):
    return (tweets, scores, bow_dict, clf)   
 
 
-def trainUniBiTrigramModel(tweetsFile = "tweet.txt", scoreFile = "score.txt"):
-   #get tweets and preprocess
-   tweets = getTweetsFromFile(tweetsFile)
-   scores = getTweetScoresFromFile(scoreFile)
+def trainUniBiTrigramModel(train_indices, tweets, scores):
+   #get tweets to train on
+   tweets = tweets[train_indices]
+   scores = scores[train_indices]
    
    #build dictionary
    bow_dict = {}
@@ -229,10 +234,11 @@ def getFeatureMatrixFromVecs(vectorList):
 
 def getTweetsFromFile(filename):
    input_file = open(filename, 'r')
-   tweets = []
+   tweets = np.array([])
    for line in input_file:
-      tweets.append(preProcess(line.lower()))
+      tweets = np.append(tweets, preProcess(line.lower()))
    input_file.close()
+
    return tweets
 
 def getTweetScoresFromFile(filename):
