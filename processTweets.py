@@ -69,7 +69,7 @@ def main():
 
 def trainUnigramModel(train_indices, tweets, scores):
    #get tweets to train on
-   tweets = tweets[train_indices]
+   #tweets = tweets[train_indices]
    scores = scores[train_indices]
    
    #build dictionary
@@ -88,16 +88,16 @@ def trainUnigramModel(train_indices, tweets, scores):
 
    #fit svm model
    clf = svm.SVR()
-   clf.fit(featureMatrix, scores)
+   clf.fit(featureMatrix[train_indices], scores)
    print("Done fitting")
 
    #return the tweets, scores, dictionary, and model in a tuple
-   return (tweets, scores, bow_dict, clf)   
+   return (tweets, scores, bow_dict, clf, featureMatrix)   
 
 
 def trainUniBiTrigramModel(train_indices, tweets, scores):
    #get tweets to train on
-   tweets = tweets[train_indices]
+   #tweets = tweets[train_indices]
    scores = scores[train_indices]
    
    #build dictionary
@@ -120,7 +120,7 @@ def trainUniBiTrigramModel(train_indices, tweets, scores):
 
    #fit svm model
    clf = svm.SVR()
-   clf.fit(featureMatrix, scores)
+   clf.fit(featureMatrix[train_indices], scores)
    print("Done fitting")
 
    #return the tweets, scores, dictionary, and model in a tuple
