@@ -11,7 +11,8 @@ def MeanSquaredError(prediction, score):
 	return (prediction - score)**2
 
 
-
+# given an array of predictions, the actual scores, the indices to test, and
+# an error function, returns the average error for the predictions
 def evaluatePrediction(predictions, scores, test_indices, errorFunc):
 	totalError = 0
 	testScores = scores[test_indices]
@@ -23,7 +24,8 @@ def evaluatePrediction(predictions, scores, test_indices, errorFunc):
 
 
 
-#TODO finsih this (the model has the tweets, or vectors??)
+# given a trained model and a set of test indices, returns an array containing
+# the prediction for each data point at these indices
 def getPredictionsFromModel(model, test_indices):
 	predictions = np.array([])
 	for i in test_indices:
@@ -33,14 +35,15 @@ def getPredictionsFromModel(model, test_indices):
 
 
 
+# the main "function". You can import this file and this code won't run
 if __name__ == "__main__":
 	tweets = pt.getTweetsFromFile("small_tweets2.txt")
 	scores = pt.getTweetScoresFromFile("small_score2.txt")
 	errorFunc = MeanSquaredError
 
 
-	kf = cross_validation.KFold(5, n_folds = 2)
-	cvErrors = []
+	kf = cross_validation.KFold(5, n_folds = 2) # put in the number of data points and the number of folds
+	cvErrors = [] # store the error for each fold
 	for train_indices, test_indices in kf:
 		print("TRAIN:", train_indices, "TEST:", test_indices)
 		uniModel = pt.trainUnigramModel(train_indices, tweets, scores)
@@ -53,6 +56,3 @@ if __name__ == "__main__":
 	print("Error of the model = " + str(meanErrorOfModel) )
 	print(cvErrors)
 
-
-
-#pt.main()
