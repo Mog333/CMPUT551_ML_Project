@@ -92,7 +92,7 @@ def trainUnigramModel(train_indices, tweets, scores):
    print("Done fitting")
 
    #return the tweets, scores, dictionary, and model in a tuple
-   return (tweets, scores, bow_dict, clf, featureMatrix)   
+   return (tweets[train_indices], scores, bow_dict, clf, featureMatrix)   
 
 
 def trainUniBiTrigramModel(train_indices, tweets, scores):
@@ -124,7 +124,7 @@ def trainUniBiTrigramModel(train_indices, tweets, scores):
    print("Done fitting")
 
    #return the tweets, scores, dictionary, and model in a tuple
-   return (tweets, scores, bow_dict, clf)   
+   return (tweets[train_indices], scores, bow_dict, clf)   
 
 #
 #  Pre processing functions
