@@ -70,5 +70,22 @@ def plotUnigramFrequency():
    plt.axis([0, max(sorted(freqDict.keys())), 0, max(countsList)])
    plt.show()
 
-   return freqDict
+   return (tweets, bow_dict, freqDict)
+
+
+def plotBigramFrequency():
+   tweets = pt.getTweetsFromFile("tweet.txt")
+   
+   bow_dict = pt.addNGramToDict(tweets, {}, 2)
+   
+   freqDict = getFreqDict(bow_dict)
+   countsList = [freqDict[c] for c in sorted(freqDict.keys())]
+   print(freqDict)
+   plt.plot(sorted(freqDict.keys()), countsList, 'ro')
+   plt.axis([0, max(sorted(freqDict.keys())), 0, max(countsList)])
+   plt.show()
+
+   return (tweets, bow_dict, freqDict)
+
+
 
