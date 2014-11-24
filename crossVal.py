@@ -42,15 +42,15 @@ def crossVal(tweets, scores, errorFunc, numFolds, modelType):
 	lenTweets = len(tweets)
 	lenScores = len(scores)
 
-	if (lenScores != lenTweets)
+	if (lenScores != lenTweets):
 		print("The number of tweets does not equal the number of scores!")
 		return None
 
-	if (modelType == "uni")
+	if (modelType == "uni"):
 		modelTrainFunction = pt.trainUnigramModel
-	elif (modelType == "uniBiTri")
+	elif (modelType == "uniBiTri"):
 		modelTrainFunction = pt.trainUniBiTrigramModel
-	else
+	else:
 		print("Unknown model type!")
 		return None
 
@@ -64,6 +64,7 @@ def crossVal(tweets, scores, errorFunc, numFolds, modelType):
 		predictions = getPredictionsFromModel(model, test_indices)
 		#print(predictions)
 		error = evaluatePrediction(predictions, scores, test_indices, errorFunc)
+		cvErrors.append(error)
 	return cvErrors
 
 
@@ -75,7 +76,14 @@ if __name__ == "__main__":
 	errorFunc = MeanSquaredError
 
 	cvErrorsUni = crossVal(tweets, scores, errorFunc, 2, "uni")
-	meanErrorOfModel = sum(cvErrors)/float(len(cvErrors))
-	print("Error of the model = " + str(meanErrorOfModel) )
-	print(cvErrors)
+	print(cvErrorsUni)
+	meanErrorOfModel = sum(cvErrorsUni)/float(len(cvErrorsUni))
+	print("Error of the uni model = " + str(meanErrorOfModel) )
+
+
+	cvErrorsBi = crossVal(tweets, scores, errorFunc, 2, "uniBiTri")
+	print(cvErrorsBi)
+	meanErrorBi = sum(cvErrorsBi)/float(len(cvErrorsBi))
+	print("Error of the uniBiTri model = " + str(meanErrorBi) )
+	
 
