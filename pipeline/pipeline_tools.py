@@ -175,14 +175,7 @@ def buildChoiceArray():
 	choices['cross_val']['text'] = 'Perform Cross Validation?'
 	choices['cross_val']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['cross_val']['value'] = -1
-	choices['cross_val']['subs'] = ['cross_num_DataPoints','cross_num_folds']
-
-	# Number of DataPoints
-	choices['cross_num_DataPoints'] = {}
-	choices['cross_num_DataPoints']['text'] = '#DataPoints.'
-	choices['cross_num_DataPoints']['pos_values'] = 'int'
-	choices['cross_num_DataPoints']['value'] = -1
-	choices['cross_num_DataPoints']['subs'] = []
+	choices['cross_val']['subs'] = ['cross_num_folds']
 
 	# Number of Folds
 	choices['cross_num_folds'] = {}

@@ -1,5 +1,6 @@
 import processTweets as pt 
 from sklearn import cross_validation
+from sklearn import svm
 import numpy as np
 
 
@@ -52,8 +53,8 @@ def crossVal(tweets, scores, errorFunc, numFolds, featureMatrix):
 	for train_indices, test_indices in kf:
 		#print("TRAIN:", train_indices, "TEST:", test_indices)
 		#model = modelTrainFunction(train_indices, tweets, scores)
-	    clf = svm.SVR()
-   		clf.fit(featureMatrix[train_indices], scores[train_indices])
+		clf = svm.SVR()
+		clf.fit(featureMatrix[train_indices], scores[train_indices])
 		predictions = getPredictionsFromModel(clf, featureMatrix, test_indices)
 		error = evaluatePrediction(predictions, scores, test_indices, errorFunc)
 		cvErrors.append(error)

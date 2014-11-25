@@ -49,14 +49,16 @@ featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x f
 t1 = time.time()
 print('FeatureMatrix created (%.2f s)' % (t1-t0))
 
-print featureMatrix
+# print featureMatrix
 
 ###
 # pass feature matrix to cross val
 ###
 t0 = time.time()
 print 'Starting Crossval'
-#result = crossVal(tweets, scores, errorFunc, numFolds, featureMatrix)
+import crossVal
+errorFunc = crossVal.MeanSquaredError
+result = crossVal.crossVal(tweets, scores, errorFunc, int(choices['cross_num_folds']['value']), featureMatrix)
 t1 = time.time()
 print('Crossval done (%.2f s)' % (t1-t0))
-# print result
+print result
