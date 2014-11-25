@@ -1,49 +1,35 @@
 import gramFeatures
 import numpy as np
+import pipeline_tools
 
 def createFeatureMatrix(tweets, choices):
-   bow_dict = {}
-   setFunctions = []
-   #Create dicitonary with optional features
-   if choices['use_unigrams']['value'] == 1:
-      numberUnigrams = int(choices['num_unigram_features']['value'])
-      bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 1, numberUnigrams)
-#      setFunctions.append(gramFeatures.setFeatureVecForNGram)
+	bow_dict = {}
 
-   if choices['use_bigrams']['value'] == 1:
-      numberBigrams = int(choices['num_bigram_features']['value'])
-      bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 2, numberBigrams)
-#      setFunctions.append(gramFeatures.setFeatureVecForNGram)
+	
+	#Create dicitonary with optional features
+	if choices['use_unigrams']['value'] == 1:
+		print("Adding unigrams to dictionary")
+		numberUnigrams = int(choices['num_unigram_features']['value'])
+		bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 1, numberUnigrams)
 
 
-   #Create empty feature vecs
-   featureVecs = createFeatureVectors(tweets, bow_dict)
-   #Set feature vecs based on choices
+	if choices['use_bigrams']['value'] == 1:
+		print("Adding bigrams to dictionary")
+		numberBigrams = int(choices['num_bigram_features']['value'])
+		bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 2, numberBigrams)
 
-   i = 0
-   for vec in featureVecs:
-      if choices['use_unigrams']['value'] == 1:
-         gramFeatures.setFeatureVecForNGram(tweets[i], vec, bow_dict, 1)
-      if choices['use_bigrams']['value'] == 1:
-         gramFeatures.setFeatureVecForNGram(tweets[i], vec, bow_dict, 2)
-      
-      i += 1
+	print("Dictionary length: " + str(len(bow_dict)))
 
-   matrix = getFeatureMatrixFromVecs(featureVecs)
-   return matrix
+	print("Matrix creation")
+	featureMatrix = np.zeros((len(tweets), len(bow_dict)), dtype=np.float16)
 
+	for i in range(0, len(tweets)):
+		percent = 1.0 * i / len(tweets)
+		pipeline_tools.statusbar(percent, 'Setting Feature Vectors')
+		if choices['use_unigrams']['value'] == 1:
+			gramFeatures.setFeatureVecForNGram(tweets[i], featureMatrix[i], bow_dict, 1)
+		if choices['use_bigrams']['value'] == 1:
+			gramFeatures.setFeatureVecForNGram(tweets[i], featureMatrix[i], bow_dict, 2)
+	pipeline_tools.statusbar(1, 'Setting Feature Vectors')
 
-def createFeatureVectors(tweetList, bow_dict):
-   #create empty set of zero vectors to work with one for each tweet
-   featureVectors = []
-   for t in tweetList:
-      featureVectors.append(np.zeros(len(bow_dict)))
-
-   return featureVectors
-
-def getFeatureMatrixFromVecs(vectorList):
-   featureMatrix = vectorList[0]
-   for vec in vectorList[1:]:
-      featureMatrix = np.vstack([featureMatrix, vec])
-
-   return featureMatrix
+	return featureMatrix

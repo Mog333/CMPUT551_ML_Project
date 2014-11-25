@@ -1,4 +1,3 @@
-import processTweets as pt 
 from sklearn import cross_validation
 from sklearn import svm
 import numpy as np

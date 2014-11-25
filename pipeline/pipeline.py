@@ -79,6 +79,7 @@ if os.path.isfile('cache/' + cacheFilename):
 else:
 	import feature
 	featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
+	print 'Writing cache file'
 	pickle.dump(featureMatrix, open('cache/' + cacheFilename,'wb') )
 	print 'Cache file written'
 
@@ -96,7 +97,7 @@ print('FeatureMatrix created (%.2f s)' % (t1-t0))
 
 print '#####################################'
 
-# print featureMatrix
+#print featureMatrix
 
 ###
 # pass feature matrix to cross val
