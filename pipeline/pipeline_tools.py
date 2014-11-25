@@ -30,7 +30,10 @@ def buildChoiceArray():
 	choices['preprocessing']['text'] = 'Perform preprocessing?'
 	choices['preprocessing']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['preprocessing']['value'] = -1
-	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_remove_twitter_names', 'pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang','pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date','pre_map_iterjections']
+	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_remove_twitter_names', 
+		'pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang',
+		'pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date',
+		'pre_map_iterjections', 'pre_stemmer_regexp', 'pre_stemmer_wordnet', 'pre_stemmer_lancaster', 'pre_morphing_wordnet']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -148,6 +151,47 @@ def buildChoiceArray():
 	choices['pre_map_iterjections']['value'] = -1
 	choices['pre_map_iterjections']['subs'] = []
 
+
+	# map url
+	choices['pre_map_url'] = {}
+	choices['pre_map_url']['text'] = 'Map url?'
+	choices['pre_map_url']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_url']['value'] = -1
+	choices['pre_map_url']['subs'] = []
+
+
+	# stemmer_regexp
+	choices['pre_stemmer_regexp'] = {}
+	choices['pre_stemmer_regexp']['text'] = 'Regex stemmer?'
+	choices['pre_stemmer_regexp']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_stemmer_regexp']['value'] = -1
+	choices['pre_stemmer_regexp']['subs'] = []
+
+
+	# stemmer_wordnet
+	choices['pre_stemmer_wordnet'] = {}
+	choices['pre_stemmer_wordnet']['text'] = 'Wordnet Stemmer?'
+	choices['pre_stemmer_wordnet']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_stemmer_wordnet']['value'] = -1
+	choices['pre_stemmer_wordnet']['subs'] = []
+
+
+	# stemmer_lancaster
+	choices['pre_stemmer_lancaster'] = {}
+	choices['pre_stemmer_lancaster']['text'] = 'Lancaster Stemmer?'
+	choices['pre_stemmer_lancaster']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_stemmer_lancaster']['value'] = -1
+	choices['pre_stemmer_lancaster']['subs'] = []
+
+
+	# morphing_wordnet
+	choices['pre_morphing_wordnet'] = {}
+	choices['pre_morphing_wordnet']['text'] = 'Wordnet Morphing?'
+	choices['pre_morphing_wordnet']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_morphing_wordnet']['value'] = -1
+	choices['pre_morphing_wordnet']['subs'] = []
+
+	
    	###
 	# Feature Creation
 	###
