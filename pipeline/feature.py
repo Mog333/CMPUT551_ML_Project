@@ -12,13 +12,14 @@ def createFeatureMatrix(tweets, choices):
 		numberUnigrams = int(choices['num_unigram_features']['value'])
 		bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 1, numberUnigrams)
 
+	print("Dictionary length unigrams: " + str(len(bow_dict)))
 
 	if choices['use_bigrams']['value'] == 1:
 		print("Adding bigrams to dictionary")
 		numberBigrams = int(choices['num_bigram_features']['value'])
 		bow_dict = gramFeatures.addNGramToDict(tweets, bow_dict, 2, numberBigrams)
 
-	print("Dictionary length: " + str(len(bow_dict)))
+	print("Dictionary length unigram bigram: " + str(len(bow_dict)))
 
 	print("Matrix creation")
 	featureMatrix = np.zeros((len(tweets), len(bow_dict)), dtype=np.float16)
