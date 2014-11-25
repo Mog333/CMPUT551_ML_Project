@@ -12,7 +12,7 @@ def buildChoiceArray():
 	choices['global']['text'] = ''
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
-	choices['global']['subs'] = ['num_examples','preprocessing','cross_val']
+	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams','cross_val']
 
 	###
 	# Number of Examples
@@ -63,20 +63,32 @@ def buildChoiceArray():
 	choices['pre_normalize']['value'] = -1
 	choices['pre_normalize']['subs'] = []
 
-   ###
+   	###
 	# Feature Creation
 	###
-   choices['use_unigrams'] = {}
+	choices['use_unigrams'] = {}
 	choices['use_unigrams']['text'] = 'use unigrams?'
 	choices['use_unigrams']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['use_unigrams']['value'] = -1
 	choices['use_unigrams']['subs'] = ['num_unigram_features']
 
-   choices['num_unigram_features'] = {}
+	choices['num_unigram_features'] = {}
 	choices['num_unigram_features']['text'] = 'Number of Unigram Features?'
 	choices['num_unigram_features']['pos_values'] = 'int'
 	choices['num_unigram_features']['value'] = -1
 	choices['num_unigram_features']['subs'] = []
+
+	choices['use_bigrams'] = {}
+	choices['use_bigrams']['text'] = 'use bigrams?'
+	choices['use_bigrams']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['use_bigrams']['value'] = -1
+	choices['use_bigrams']['subs'] = ['num_bigram_features']
+
+	choices['num_bigram_features'] = {}
+	choices['num_bigram_features']['text'] = 'Number of bigram Features?'
+	choices['num_bigram_features']['pos_values'] = 'int'
+	choices['num_bigram_features']['value'] = -1
+	choices['num_bigram_features']['subs'] = []
 
 
 	###
