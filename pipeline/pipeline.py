@@ -89,7 +89,7 @@ def main(filename = ''):
 	#	pickle.dump(featureMatrix, open('cache/' + cacheFilename,'wb') )
 	#	print 'Cache file written'
 	featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
-
+	print(featureMatrix)
 
 	t1 = time.time()
 	print('FeatureMatrix created (%.2f s)' % (t1-t0))

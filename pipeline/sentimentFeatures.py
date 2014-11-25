@@ -16,9 +16,6 @@ def createDictFromFile(fileName):
 				sentiDict[newKey] = (wordList[2], wordList[3]) # the value is a tuple with positive and negative value
 
 
-	print(len(sentiDict))
-	print(numRows)
-
 	in_file.close()
 
 	return sentiDict
@@ -39,8 +36,8 @@ def setFeatureVecForSenti(tweet, featureVector, feature_dict, fileName="../Senti
 	NegativeSum = 0
 	for word in wordsList:
 		if word in sentiDict:
-			thisPositive = sentiDict[word][0]
-			thisNegative = sentiDict[word][1]
+			thisPositive = float(sentiDict[word][0])
+			thisNegative = float(sentiDict[word][1])
 			PositiveSum = PositiveSum + thisPositive
 			NegativeSum = NegativeSum + thisNegative
 
