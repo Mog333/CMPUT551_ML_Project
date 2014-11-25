@@ -30,7 +30,7 @@ def buildChoiceArray():
 	choices['preprocessing']['text'] = 'Perform preprocessing?'
 	choices['preprocessing']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['preprocessing']['value'] = -1
-	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_repetitions','pre_normalize']
+	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang','pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date','pre_map_iterjections']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -62,6 +62,83 @@ def buildChoiceArray():
 	choices['pre_normalize']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['pre_normalize']['value'] = -1
 	choices['pre_normalize']['subs'] = []
+
+	# pre_tokenize
+	choices['pre_tokenize'] = {}
+	choices['pre_tokenize']['text'] = 'Tokenize?'
+	choices['pre_tokenize']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_tokenize']['value'] = -1
+	choices['pre_tokenize']['subs'] = []
+
+	# map emoticons to positive, negative and neutral (unknown)
+	choices['pre_map_emoticons'] = {}
+	choices['pre_map_emoticons']['text'] = 'Map emoticons to positive, negative and neutral (unknown)?'
+	choices['pre_map_emoticons']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_emoticons']['value'] = -1
+	choices['pre_map_emoticons']['subs'] = []
+
+	# map brands to a brand key word
+	choices['pre_map_brands'] = {}
+	choices['pre_map_brands']['text'] = 'Map brands to a brand key word?'
+	choices['pre_map_brands']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_brands']['value'] = -1
+	choices['pre_map_brands']['subs'] = []
+
+	# slang mapping
+	choices['pre_map_slang'] = {}
+	choices['pre_map_slang']['text'] = 'Slang mapping?'
+	choices['pre_map_slang']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_slang']['value'] = -1
+	choices['pre_map_slang']['subs'] = []
+
+	# map urls to url key word
+	choices['pre_map_url'] = {}
+	choices['pre_map_url']['text'] = 'Map URL?'
+	choices['pre_map_url']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_url']['value'] = -1
+	choices['pre_map_url']['subs'] = []
+
+	# map images to image key word
+	choices['pre_map_image'] = {}
+	choices['pre_map_image']['text'] = 'Map images?'
+	choices['pre_map_image']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_image']['value'] = -1
+	choices['pre_map_image']['subs'] = []
+
+	# map hashtags
+	choices['pre_map_hastags'] = {}
+	choices['pre_map_hastags']['text'] = 'Map hashtags?'
+	choices['pre_map_hastags']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_hastags']['value'] = -1
+	choices['pre_map_hastags']['subs'] = []
+
+	# map anotations
+	choices['pre_map_anotations'] = {}
+	choices['pre_map_anotations']['text'] = 'Map anotations?'
+	choices['pre_map_anotations']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_anotations']['value'] = -1
+	choices['pre_map_anotations']['subs'] = []
+	
+	# map time
+	choices['pre_map_time'] = {}
+	choices['pre_map_time']['text'] = 'Map time?'
+	choices['pre_map_time']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_time']['value'] = -1
+	choices['pre_map_time']['subs'] = []
+
+	# map date
+	choices['pre_map_date'] = {}
+	choices['pre_map_date']['text'] = 'Map date?'
+	choices['pre_map_date']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_date']['value'] = -1
+	choices['pre_map_date']['subs'] = []
+
+	# map iterjections
+	choices['pre_map_iterjections'] = {}
+	choices['pre_map_iterjections']['text'] = 'Map iterjections?'
+	choices['pre_map_iterjections']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_map_iterjections']['value'] = -1
+	choices['pre_map_iterjections']['subs'] = []
 
    	###
 	# Feature Creation

@@ -4,7 +4,7 @@ from sklearn import cross_validation
 import numpy as np
 
 import pipeline_tools
-import processTweets as pt
+import tweetUtils as pt
 from preprocessing import preprocessTweets
 
 
