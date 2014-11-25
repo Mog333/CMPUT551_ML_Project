@@ -1,6 +1,6 @@
 
 
-def createDictFromFile(fileName):
+def createDictFromFile(fileName="../SentiWordNet/SentiWordNet.txt"):
 
 	in_file = open(fileName, 'r')
 
@@ -29,17 +29,21 @@ def addSentiToDict(feature_dict):
 
 
 
-def setFeatureVecForSenti(tweet, featureVector, feature_dict, fileName="../SentiWordNet/SentiWordNet.txt"):
-	sentiDict = createDictFromFile(fileName)
-	wordsList = tweet.split(' ')
+def setFeatureVecForSenti(tweet, featureVector, feature_dict, sentiDict):
+	wordsList = tweet.split()
 	PositiveSum = 0
 	NegativeSum = 0
 	for word in wordsList:
 		if word in sentiDict:
-			thisPositive = float(sentiDict[word][0])
-			thisNegative = float(sentiDict[word][1])
-			PositiveSum = PositiveSum + thisPositive
-			NegativeSum = NegativeSum + thisNegative
+			try:
+				thisPositive = float(sentiDict[word][0])
+				thisNegative = float(sentiDict[word][1])
+				PositiveSum = PositiveSum + thisPositive
+				NegativeSum = NegativeSum + thisNegative
+			except ValueError:
+				print("Value error: " + word + " " + str(sentiDict[word]))
+				continue
+
 
 	indexPositive = feature_dict["*&PositiveSum"]
 	featureVector[indexPositive] = PositiveSum

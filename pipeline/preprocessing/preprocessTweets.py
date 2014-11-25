@@ -1,7 +1,6 @@
 import pipeline_tools
 
 def preprocess(tweet_list, choices):
-	
 	for key,tweet in enumerate(tweet_list):
 		percent = 1.0 * key / len(tweet_list)
 		pipeline_tools.statusbar(percent, 'Preprocessing')
@@ -15,6 +14,11 @@ def preprocess(tweet_list, choices):
 		if(choices['pre_appostrophy']['value'] == 1):
 			from generalPreprocessingMethods import removeApostrophe
 			tweet = removeApostrophe(tweet)
+
+		# Remove twitter names like @robpost
+		if(choices['pre_remove_twitter_names']['value'] == 1):
+			from generalPreprocessingMethods import removeTwitterNames
+			tweet = removeTwitterNames(tweet)
 
 		# remove character repetitions. 
 		# Example pleeeeeeeeeeeease => please
@@ -113,6 +117,7 @@ def preprocess(tweet_list, choices):
 
 		#	END OF MAPPING SECTION
 		####################################################################
+		tweet_list[key] = tweet
 
 	pipeline_tools.statusbar(1, 'Preprocessing')
 

@@ -30,7 +30,7 @@ def buildChoiceArray():
 	choices['preprocessing']['text'] = 'Perform preprocessing?'
 	choices['preprocessing']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['preprocessing']['value'] = -1
-	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang','pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date','pre_map_iterjections']
+	choices['preprocessing']['subs'] = ['pre_lower_chars','pre_appostrophy','pre_remove_twitter_names', 'pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang','pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date','pre_map_iterjections']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -52,6 +52,14 @@ def buildChoiceArray():
 	choices['pre_repetitions']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['pre_repetitions']['value'] = -1
 	choices['pre_repetitions']['subs'] = []
+
+	# remove twitter names. 
+	choices['pre_remove_twitter_names'] = {}
+	choices['pre_remove_twitter_names']['text'] = 'Remove Twitter Names?'
+	choices['pre_remove_twitter_names']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_remove_twitter_names']['value'] = -1
+	choices['pre_remove_twitter_names']['subs'] = []
+
 
 	# pre-normilize. (imported code) external code, handles some case
 	# According to the source of the code:

@@ -27,13 +27,19 @@ def removeCharacterRepetitions(tweet):
 		return new_tweet
 
 
-
-
+#Remove tweet names like @robpost
+def removeTwitterNames(tweet):
+	wordList = tweet.split()
+	newTweet = ""
+	for word in wordList:
+		if word[0] != '@':
+			newTweet += word + " "
+	return newTweet
 
 # This method remover appostrophis in cases when it 
 # is used as character ommision
 def removeApostrophe(tweet):
-	tweet = tweet.replace(' won\'t ', ' would not ')
+	tweet = tweet.replace('won\'t ', ' would not ')
 	tweet = tweet.replace('n\'t ', ' not ')
 	tweet = tweet.replace('\'m ', ' am ')
 	tweet = tweet.replace('\'ll ', ' will ')

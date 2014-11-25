@@ -12,7 +12,7 @@ import tweetUtils as pt
 from preprocessing import preprocessTweets
 
 
-def main(filename = ''):
+def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	choices = pipeline_tools.buildChoiceArray()
 
 	print '###'
@@ -28,8 +28,8 @@ def main(filename = ''):
 	print 'Starting Calculation with %d examples' % int(choices['num_examples']['value'])
 	print '#####################################'
 
-	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) )
-	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) )
+	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) , tweetsFile)
+	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) , scoresFile)
 
 	###
 	# Preprocessing
@@ -67,17 +67,16 @@ def main(filename = ''):
 	t0 = time.time()
 	print 'Starting FeatureMatrix creation'
 
-	# handle cache files
-	cacheFilename = 'fm'
-	dependencies = ['num_examples']
-	dependencies += choices['preprocessing']['subs']
-	dependencies += ['use_unigrams', 'num_unigram_features', 'use_bigrams', 'num_bigram_features']
-	for param in dependencies:
-		cacheFilename += '_' + str(choices[param]['value'])
-	cacheFilename += '.cache'
-
-
 	#caching takes longer than rebuilding
+
+	# handle cache files
+#	cacheFilename = 'fm'
+#	dependencies = ['num_examples']
+#	dependencies += choices['preprocessing']['subs']
+#	dependencies += ['use_unigrams', 'num_unigram_features', 'use_bigrams', 'num_bigram_features']
+#	for param in dependencies:
+#		cacheFilename += '_' + str(choices[param]['value'])
+#	cacheFilename += '.cache'
 
 	#if os.path.isfile('cache/' + cacheFilename):
 	#	featureMatrix = pickle.load(open('cache/' + cacheFilename,'rb'))
@@ -88,8 +87,9 @@ def main(filename = ''):
 	#	print 'Writing cache file'
 	#	pickle.dump(featureMatrix, open('cache/' + cacheFilename,'wb') )
 	#	print 'Cache file written'
-	featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
-	print(featureMatrix)
+	featureObject = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
+	featureMatrix = featureObject['featureMatrix']	
+	#print(featureMatrix)
 
 	t1 = time.time()
 	print('FeatureMatrix created (%.2f s)' % (t1-t0))
@@ -110,6 +110,7 @@ def main(filename = ''):
 	print('Crossval done (%.2f s)' % (t1-t0))
 	print result
 	print '#####################################'
+	return featureObject
 
 if __name__ == "__main__":
 	filename = ''

@@ -24,9 +24,11 @@ def createFeatureMatrix(tweets, choices):
 
 	if choices['use_sentiment']['value'] == 1:
 		print("Adding sentiment to dictionary")
+		sentiDict = sf.createDictFromFile()
 		bow_dict = sf.addSentiToDict(bow_dict)
 		print("Dictionary length sentiment: " + str(len(bow_dict)))
-
+	else:
+		sentiDict = {}
 	print("Matrix creation")
 	featureMatrix = np.zeros((len(tweets), len(bow_dict)), dtype=np.float16)
 
@@ -38,8 +40,8 @@ def createFeatureMatrix(tweets, choices):
 		if choices['use_bigrams']['value'] == 1:
 			gramFeatures.setFeatureVecForNGram(tweets[i], featureMatrix[i], bow_dict, 2)
 		if choices['use_sentiment']['value'] == 1:
-			sf.setFeatureVecForSenti(tweets[i], featureMatrix[i], bow_dict, "../SentiWordNet/SentiWordNet.txt")
+			sf.setFeatureVecForSenti(tweets[i], featureMatrix[i], bow_dict, sentiDict)
 	pipeline_tools.statusbar(1, 'Setting Feature Vectors')
 
 
-	return featureMatrix
+	return {'featureMatrix':featureMatrix, "dict":bow_dict}
