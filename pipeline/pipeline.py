@@ -36,24 +36,26 @@ if(choices['preprocessing']['value']):
 	print 'Starting preprocessing'
 
 	# handle cache files
-	preprocessCacheFilename = 'ppc'
-	
-	preprocessCacheFilename += '_' + str(choices['num_examples']['value'])
-	for param in choices['preprocessing']['subs']:
-		preprocessCacheFilename += '_' + str(choices[param]['value'])
-	preprocessCacheFilename += '.cache'
+	cacheFilename = 'ppc'
+	dependencies = ['num_examples']
+	dependencies += choices['preprocessing']['subs']
+	for param in dependencies:
+		cacheFilename += '_' + str(choices[param]['value'])
+	cacheFilename += '.cache'
 
-	if os.path.isfile('cache/' + preprocessCacheFilename):
-		tweets = pickle.load(open('cache/' + preprocessCacheFilename,'rb'))
+	if os.path.isfile('cache/' + cacheFilename):
+		tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
 		print 'Cached preprocessing file used!'
 	else:
 		tweets = preprocessTweets.preprocess(tweets, choices)
-		pickle.dump(tweets, open('cache/' + preprocessCacheFilename,'wb') )
+		pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
 		print 'Cache file written'
 	t1 = time.time()
 	print('Preprocessing done (%.2f s)' % (t1-t0))
 else:
 	print 'Skip preprocessing'
+
+print '#####################################'
 
 
 ###
@@ -61,10 +63,38 @@ else:
 ###
 t0 = time.time()
 print 'Starting FeatureMatrix creation'
-import feature
-featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
+
+# handle cache files
+cacheFilename = 'fm'
+dependencies = ['num_examples']
+dependencies += choices['preprocessing']['subs']
+dependencies += ['use_unigrams', 'num_unigram_features', 'use_bigrams', 'num_bigram_features']
+for param in dependencies:
+	cacheFilename += '_' + str(choices[param]['value'])
+cacheFilename += '.cache'
+
+if os.path.isfile('cache/' + cacheFilename):
+	featureMatrix = pickle.load(open('cache/' + cacheFilename,'rb'))
+	print 'Cached featureMatrix file used!'
+else:
+	import feature
+	featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
+	pickle.dump(featureMatrix, open('cache/' + cacheFilename,'wb') )
+	print 'Cache file written'
+
+# print type(featureMatrix)
+# print len(featureMatrix)
+# print len(featureMatrix[0])
+# print type(featureMatrix[0][0])
+# print featureMatrix.shape()
+###
+# matrix elements are float.64
+###
+
 t1 = time.time()
 print('FeatureMatrix created (%.2f s)' % (t1-t0))
+
+print '#####################################'
 
 # print featureMatrix
 
@@ -79,3 +109,4 @@ result = crossVal.crossVal(tweets, scores, errorFunc, int(choices['cross_num_fol
 t1 = time.time()
 print('Crossval done (%.2f s)' % (t1-t0))
 print result
+print '#####################################'
