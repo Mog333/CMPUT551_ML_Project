@@ -186,16 +186,27 @@ def buildChoiceArray():
 
 	return choices
 
-def ask(choices, questions = '', num = '', parser = ''):
-	if(num == ''):
-		if(len(sys.argv) >= 2):
-			if not os.path.exists(sys.argv[1]):
-			    sys.exit('ERROR: Ini %s was not found!' % sys.argv[1])
+def ask(choices, questions = '', num = '', parser = '', ini_filename = ''):
+#	if(num == ''):
+#		if(len(sys.argv) >= 2):
+#			if not os.path.exists(sys.argv[1]):
+#			    sys.exit('ERROR: Ini %s was not found!' % sys.argv[1])
 
+#			parser = SafeConfigParser()
+#			parser.read('simple.ini')
+#		else:
+#			parser = ''
+
+	if num == '':
+		if ini_filename != '':
+			if not os.path.exists(ini_filename):
+				sys.exit('ERROR: Ini %s was not found!' % ini_filename)
+		
 			parser = SafeConfigParser()
-			parser.read('simple.ini')
+			parser.read(ini_filename)
 		else:
 			parser = ''
+
 	
 	if(questions == ''):
 		questions = choices['global']['subs']
