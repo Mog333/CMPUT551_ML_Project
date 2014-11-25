@@ -3,10 +3,27 @@ import sentimentFeatures as sf
 import numpy as np
 import pipeline_tools
 
+def createFeatureVecFromTweet(tweet, bow_dict, choices):
+	
+	if choices['use_sentiment']['value'] == 1:
+		sentiDict = sf.createDictFromFile()
+	else:
+		sentiDict = {}
+
+	featureVec = np.zeros(len(bow_dict), dtype=np.float16)
+
+	if choices['use_unigrams']['value'] == 1:
+		gramFeatures.setFeatureVecForNGram(tweet, featureVec, bow_dict, 1)
+	if choices['use_bigrams']['value'] == 1:
+		gramFeatures.setFeatureVecForNGram(tweet, featureVec, bow_dict, 2)
+	if choices['use_sentiment']['value'] == 1:
+		sf.setFeatureVecForSenti(tweet, featureVec, bow_dict, sentiDict)
+
+	return featureVec
+
 def createFeatureMatrix(tweets, choices):
 	bow_dict = {}
 
-	
 	#Create dicitonary with optional features
 	if choices['use_unigrams']['value'] == 1:
 		print("Adding unigrams to dictionary")

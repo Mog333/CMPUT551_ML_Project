@@ -3,14 +3,80 @@ import time
 import sys
 import os
 from sklearn import cross_validation
+from sklearn import svm
 import numpy as np
 import pickle
 import os
 import feature
 import pipeline_tools
 import tweetUtils as pt
+import crossVal
 from preprocessing import preprocessTweets
 
+def test():
+	mo = trainModelForTesting('simple.ini')
+	return mo
+
+
+def predictUsingModel(modelObject, tweet):
+	if(modelObject['choices']['preprocessing']['value']):
+		print 'Starting preprocessing'
+		tweets = [tweet]
+		tweets = preprocessTweets.preprocess(tweets, modelObject['choices'])
+		tweet = tweets[0]
+	else:
+		print 'Skip preprocessing'
+
+	featureVec = feature.createFeatureVecFromTweet(tweet, modelObject['featureObject']['dict'], modelObject['choices'])
+	return {'prediction':modelObject['model'].predict(featureVec), 'tweet': tweet}
+
+def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
+	choices = pipeline_tools.buildChoiceArray()
+	choices = pipeline_tools.ask(choices, ini_filename = filename)
+
+	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) , tweetsFile)
+	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) , scoresFile)
+
+	if(choices['preprocessing']['value']):
+		t0 = time.time()
+		print 'Starting preprocessing'
+
+		# handle cache files
+		cacheFilename = 'ppc'
+		dependencies = ['num_examples']
+		dependencies += choices['preprocessing']['subs']
+		for param in dependencies:
+			cacheFilename += '_' + str(choices[param]['value'])
+		cacheFilename += '.cache'
+
+		if os.path.isfile('cache/' + cacheFilename):
+			tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
+			print 'Cached preprocessing file used!'
+		else:
+			tweets = preprocessTweets.preprocess(tweets, choices)
+			pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
+			print 'Cache file written'
+		t1 = time.time()
+		print('Preprocessing done (%.2f s)' % (t1-t0))
+	else:
+		print 'Skip preprocessing'
+
+	t0 = time.time()
+	print 'Creating Feature Matrix'
+	featureObject = feature.createFeatureMatrix(tweets, choices)
+	featureMatrix = featureObject['featureMatrix']
+	t1 = time.time()
+	print('FeatureMatrix created (%.2f s)' % (t1-t0))
+
+	t0 = time.time()
+	clf = svm.SVR()
+	clf.fit(featureMatrix, scores)
+	t1 = time.time()
+	print('Model trained (%.2f s)' % (t1-t0))
+	
+	return {'model':clf, "featureObject":featureObject, 'choices':choices}
+
+	
 
 def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	choices = pipeline_tools.buildChoiceArray()
@@ -103,13 +169,16 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	###
 	t0 = time.time()
 	print 'Starting Crossval'
-	import crossVal
+	
 	errorFunc = crossVal.MeanSquaredError
+		
 	result = crossVal.crossVal(tweets, scores, errorFunc, int(choices['cross_num_folds']['value']), featureMatrix)
 	t1 = time.time()
 	print('Crossval done (%.2f s)' % (t1-t0))
 	print result
 	print '#####################################'
+
+	featureObject['choices'] = choices
 	return featureObject
 
 if __name__ == "__main__":
