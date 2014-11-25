@@ -2,6 +2,8 @@ import json
 import time
 from sklearn import cross_validation
 import numpy as np
+import pickle
+import os
 
 import pipeline_tools
 import tweetUtils as pt
@@ -32,7 +34,22 @@ scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) )
 if(choices['preprocessing']['value']):
 	t0 = time.time()
 	print 'Starting preprocessing'
-	tweets = preprocessTweets.preprocess(tweets, choices)
+
+	# handle cache files
+	preprocessCacheFilename = 'ppc'
+	
+	preprocessCacheFilename += '_' + str(choices['num_examples']['value'])
+	for param in choices['preprocessing']['subs']:
+		preprocessCacheFilename += '_' + str(choices[param]['value'])
+	preprocessCacheFilename += '.cache'
+
+	if os.path.isfile('cache/' + preprocessCacheFilename):
+		tweets = pickle.load(open('cache/' + preprocessCacheFilename,'rb'))
+		print 'Cached preprocessing file used!'
+	else:
+		tweets = preprocessTweets.preprocess(tweets, choices)
+		pickle.dump(tweets, open('cache/' + preprocessCacheFilename,'wb') )
+		print 'Cache file written'
 	t1 = time.time()
 	print('Preprocessing done (%.2f s)' % (t1-t0))
 else:
