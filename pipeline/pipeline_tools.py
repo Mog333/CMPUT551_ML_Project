@@ -244,7 +244,7 @@ def ask(choices, questions = '', num = '', parser = ''):
 		# print x
 
 		if(len(choices[question]['subs']) and choices[question]['value'] == 1):
-			choices[question]['subs'] = ask(choices, choices[question]['subs'], '  %s%d.' % (num,num2), parser)
+			ask(choices, choices[question]['subs'], '  %s%d.' % (num,num2), parser)
 		num2 += 1
 
 	return choices
