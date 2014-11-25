@@ -1,4 +1,5 @@
 import gramFeatures
+import numpy as np
 
 def createFeatureMatrix(tweets, choices):
    bow_dict = {}
@@ -16,15 +17,18 @@ def createFeatureMatrix(tweets, choices):
 
 
    #Create empty feature vecs
-   featureVecs = createFeatureVectors(tweets, bow_dict):
+   featureVecs = createFeatureVectors(tweets, bow_dict)
    #Set feature vecs based on choices
 
+   i = 0
    for vec in featureVecs:
       if choices['use_unigrams']['value'] == 1:
-         setFeatureVecForNGram(tweets, vec, bow_dict, 1)
+         gramFeatures.setFeatureVecForNGram(tweets[i], vec, bow_dict, 1)
       if choices['use_bigrams']['value'] == 1:
-         setFeatureVecForNGram(tweets, vec, bow_dict, 2)
-   
+         gramFeatures.setFeatureVecForNGram(tweets[i], vec, bow_dict, 2)
+      
+      i += 1
+
    matrix = getFeatureMatrixFromVecs(featureVecs)
    return matrix
 

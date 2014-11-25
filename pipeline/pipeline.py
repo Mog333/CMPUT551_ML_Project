@@ -38,15 +38,18 @@ if(choices['preprocessing']['value']):
 else:
 	print 'Skip preprocessing'
 
+
 ###
 # create and build feature matrix
 ###
 t0 = time.time()
 print 'Starting FeatureMatrix creation'
-#featureMatrix = createFeatureMatrix(choices)# shape = tweets x features
+import feature
+featureMatrix = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
 t1 = time.time()
 print('FeatureMatrix created (%.2f s)' % (t1-t0))
 
+print featureMatrix
 
 ###
 # pass feature matrix to cross val
@@ -56,4 +59,4 @@ print 'Starting Crossval'
 #result = crossVal(tweets, scores, errorFunc, numFolds, featureMatrix)
 t1 = time.time()
 print('Crossval done (%.2f s)' % (t1-t0))
-print result
+# print result

@@ -1,10 +1,11 @@
 import numpy as np
 
 def getTweetsFromFile(count):
-   input_file = open('tweets.txt', 'r')
-   tweets = np.array([])
+   # input_file = open('tweets.txt', 'r')
+   input_file = open('../small_tweets2.txt', 'r')
+   tweets = []
    for line in input_file:
-      tweets = np.append(tweets, line)
+      tweets.append(line)
       if(len(tweets) == count):
       	break;
    input_file.close()
@@ -12,7 +13,8 @@ def getTweetsFromFile(count):
    return tweets
 
 def getTweetScoresFromFile(count):
-   input_file = open('scores.txt', 'r')
+   # input_file = open('scores.txt', 'r')
+   input_file = open('../small_score2.txt', 'r')
    tweetScores = np.array([])
    for line in input_file:
       score = float(line.lower().replace("\n", ""))

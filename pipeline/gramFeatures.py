@@ -43,6 +43,7 @@ def addNGramToDict(tweetList, bow_dict, gramNum = 1, numFeatures = -1):
 
 #Frequency features - not presence
 def setFeatureVecForNGram(tweet, featureVec, bow_dict, n):
+   # type(tweet)
    gramList = list(nltk.ngrams(tweet.split(), n))
    for gram in gramList:
       try:
@@ -50,6 +51,6 @@ def setFeatureVecForNGram(tweet, featureVec, bow_dict, n):
          featureVec[index] += 1
       except KeyError:#unknown feature found
          continue
-   
+
    return featureVec
 
