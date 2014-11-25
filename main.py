@@ -20,7 +20,7 @@ def preProcess(words):
 t0 = time.time()
 
 
-in_file = open("tweet.txt", 'r')
+in_file = open("small_tweets.txt", 'r')
 
 words = []
 
@@ -114,7 +114,7 @@ print("Time to create feature vectors = " + str(t1-t0))
 
 t0 = time.time()
 
-in_labels = open("score.txt", 'r')
+in_labels = open("small_score.txt", 'r')
 
 scores = []
 
