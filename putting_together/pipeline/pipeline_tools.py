@@ -12,7 +12,7 @@ def buildChoiceArray():
 	choices['global']['text'] = ''
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
-	choices['global']['subs'] = ['num_examples','preprocessing','cross_val']
+	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','cross_val']
 
 	###
 	# Number of Examples
@@ -66,13 +66,13 @@ def buildChoiceArray():
    ###
 	# Feature Creation
 	###
-   choices['use_unigrams'] = {}
+	choices['use_unigrams'] = {}
 	choices['use_unigrams']['text'] = 'use unigrams?'
 	choices['use_unigrams']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['use_unigrams']['value'] = -1
 	choices['use_unigrams']['subs'] = ['num_unigram_features']
 
-   choices['num_unigram_features'] = {}
+	choices['num_unigram_features'] = {}
 	choices['num_unigram_features']['text'] = 'Number of Unigram Features?'
 	choices['num_unigram_features']['pos_values'] = 'int'
 	choices['num_unigram_features']['value'] = -1
