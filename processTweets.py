@@ -236,7 +236,7 @@ def getTweetsFromFile(filename):
    input_file = open(filename, 'r')
    tweets = np.array([])
    for line in input_file:
-      tweets = np.append(tweets, preProcess(line.lower()))
+      tweets = np.append(tweets, line.lower())
    input_file.close()
 
    return tweets
