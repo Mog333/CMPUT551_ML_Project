@@ -1,6 +1,8 @@
 # Temp Files:
 *.py~
 *.txt~
+*.ini~
+*.gitignore~
 
 # Compiled source #
 ###################
