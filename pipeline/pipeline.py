@@ -13,11 +13,20 @@ import tweetUtils as pt
 import crossVal
 from preprocessing import preprocessTweets
 
-def test():
-	mo = trainModelForTesting('simple.ini')
-	return mo
+def test(fold = 50):
+	mo = trainModelForTesting('init2.ini')
+	tweets = pt.getTweetsFromFile( int(mo['choices']['num_examples']['value']) , 'tweets.txt')
+	scores = pt.getTweetScoresFromFile( int(mo['choices']['num_examples']['value']) , 'scores.txt')
+	prediction1 = []	
+	prediction2 = []
+	for i in range(fold):
+		#prediction1.append(predictUsingModel(mo, tweets[i])['prediction'])
+		prediction2.append(mo['model'].predict(mo['featureObject']['featureMatrix'][i]))
 
-
+	for i in range(fold):
+		print(str(i+1) + ":" + str(prediction2[i]))
+		
+	
 def predictUsingModel(modelObject, tweet):
 	if(modelObject['choices']['preprocessing']['value']):
 		print 'Starting preprocessing'
@@ -34,8 +43,8 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 	choices = pipeline_tools.buildChoiceArray()
 	choices = pipeline_tools.ask(choices, ini_filename = filename)
 
-	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) , tweetsFile)
-	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) , scoresFile)
+	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value'] + 50) , tweetsFile)
+	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value'] + 50) , scoresFile)
 
 	if(choices['preprocessing']['value']):
 		t0 = time.time()
@@ -51,8 +60,13 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 
 		if os.path.isfile('cache/' + cacheFilename):
 			tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
+			tweets = tweets[50:]
+			scores = scores[50:]
+
 			print 'Cached preprocessing file used!'
 		else:
+			tweets = tweets[50:]
+			scores = scores[50:]
 			tweets = preprocessTweets.preprocess(tweets, choices)
 			pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
 			print 'Cache file written'
@@ -69,7 +83,7 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 	print('FeatureMatrix created (%.2f s)' % (t1-t0))
 
 	t0 = time.time()
-	clf = svm.SVR()
+	clf = svm.SVR(kernel='linear')
 	clf.fit(featureMatrix, scores)
 	t1 = time.time()
 	print('Model trained (%.2f s)' % (t1-t0))
