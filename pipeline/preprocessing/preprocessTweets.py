@@ -73,8 +73,8 @@ def preprocess(tweet_list, choices):
 
 				translated_slang = mapSlangs(token)
 				translated_slang = translated_slang.split(' ')
-				if (token.strip() == 'youre'):
-					print translated_slang
+#				if (token.strip() == 'youre'):
+#					print translated_slang
 				for i in translated_slang:
 					tokens_temp.append(i)
 
