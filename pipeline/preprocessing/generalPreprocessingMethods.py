@@ -39,7 +39,10 @@ def removeTwitterNames(tweet):
 # This method remover appostrophis in cases when it 
 # is used as character ommision
 def removeApostrophe(tweet):
+	tweet = tweet.replace('it\'s ', ' it is ')
 	tweet = tweet.replace('won\'t ', ' would not ')
+	tweet = tweet.replace('can\'t ', ' can not ')
+	tweet = tweet.replace('does\'t ', ' does not ')
 	tweet = tweet.replace('n\'t ', ' not ')
 	tweet = tweet.replace('\'m ', ' am ')
 	tweet = tweet.replace('\'ll ', ' will ')

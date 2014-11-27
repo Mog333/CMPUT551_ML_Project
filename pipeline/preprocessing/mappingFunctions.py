@@ -118,7 +118,7 @@ def mapLocations(token):
 	f.close()
 
 	if token in locations:
-		return 'locationKey'
+		return '*&locationKey'
 
 	return token
 
@@ -135,7 +135,7 @@ def mapBrands(token):
 	f.close()
 
 	if token in brands:
-		return 'brand'	
+		return '*&brand'	
 
 	return token
 
@@ -168,13 +168,15 @@ def mapSlangs(token):
 
 def mapHashtag(token):
 	if token[0] == '#':
-		return 'hash'
+		return '*&hash'
 	return token
 
 
 def mapAnnotation(token):
+
 	if token[0] == '@':
-		return 'annotation'
+		return '*&annotation'
+
 	return token
 
 
