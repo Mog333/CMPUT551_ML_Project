@@ -186,7 +186,7 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	
 	errorFunc = crossVal.MeanSquaredError
 		
-	result = crossVal.crossVal(tweets, scores, errorFunc, int(choices['cross_num_folds']['value']), featureMatrix)
+	result = crossVal.crossVal(tweets, scores, errorFunc, choices, featureMatrix)
 	t1 = time.time()
 	print('Crossval done (%.2f s)' % (t1-t0))
 	print result

@@ -13,7 +13,7 @@ def buildChoiceArray():
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
 	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment',
-	'use_counterFact', 'use_temporalComp', 'cross_val']
+	'use_counterFact', 'use_temporalComp', 'svm_model','cross_val']
 
 	###
 	# Number of Examples
@@ -246,6 +246,18 @@ def buildChoiceArray():
 	choices['use_temporalComp']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['use_temporalComp']['value'] = -1
 	choices['use_temporalComp']['subs'] = []
+
+	choices['svm_model'] = {}
+	choices['svm_model']['text'] = 'Choose svm model type?'
+	choices['svm_model']['pos_values'] = {0: 'linear', 1: 'rbf', 2:'poly'}
+	choices['svm_model']['value'] = -1
+	choices['svm_model']['subs'] = ['svm_degree']
+
+	choices['svm_degree'] = {}
+	choices['svm_degree']['text'] = 'Choose svm model degree?'
+	choices['svm_degree']['pos_values'] = 'int'
+	choices['svm_degree']['value'] = -1
+	choices['svm_degree']['subs'] = []
 
 	###
 	# Cross Validation

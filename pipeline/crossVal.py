@@ -38,7 +38,13 @@ def getPredictionsFromModel(model, featureMatrix, test_indices):
 # the number of folds for cross-validation, and the feature matrix
 # this function trains the model and evaluates on the other folds.
 # returns a list of each error for the different folds
-def crossVal(tweets, scores, errorFunc, numFolds, featureMatrix):
+def crossVal(tweets, scores, errorFunc, choices, featureMatrix):
+	numFolds = int(choices['cross_num_folds']['value'])
+	
+	modelDict = {0: 'linear', 1: 'rbf', 2:'poly'}
+	modelType = modelDict[choices['svm_model']['value']]
+	modelDegree = choices['svm_degree']['value']
+
 	lenTweets = len(tweets)
 	lenScores = len(scores)
 
@@ -52,7 +58,7 @@ def crossVal(tweets, scores, errorFunc, numFolds, featureMatrix):
 	for train_indices, test_indices in kf:
 		#print("TRAIN:", train_indices, "TEST:", test_indices)
 		#model = modelTrainFunction(train_indices, tweets, scores)
-		clf = svm.SVR()
+		clf = svm.SVR(modelType, degree = modelDegree)
 		clf.fit(featureMatrix[train_indices], scores[train_indices])
 		predictions = getPredictionsFromModel(clf, featureMatrix, test_indices)
 		error = evaluatePrediction(predictions, scores, test_indices, errorFunc)
