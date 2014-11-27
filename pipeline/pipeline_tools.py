@@ -12,7 +12,8 @@ def buildChoiceArray():
 	choices['global']['text'] = ''
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
-	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment', 'cross_val']
+	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment',
+	'use_counterFact', 'use_temporalComp', 'cross_val']
 
 	###
 	# Number of Examples
@@ -234,6 +235,17 @@ def buildChoiceArray():
 	choices['use_sentiment']['value'] = -1
 	choices['use_sentiment']['subs'] = []
 
+	choices['use_counterFact'] = {}
+	choices['use_counterFact']['text'] = 'use counterFactuality?'
+	choices['use_counterFact']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['use_counterFact']['value'] = -1
+	choices['use_counterFact']['subs'] = []
+
+	choices['use_temporalComp'] = {}
+	choices['use_temporalComp']['text'] = 'use temporalCompression?'
+	choices['use_temporalComp']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['use_temporalComp']['value'] = -1
+	choices['use_temporalComp']['subs'] = []
 
 	###
 	# Cross Validation
