@@ -13,7 +13,7 @@ def buildChoiceArray():
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
 	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment',
-	'use_counterFact', 'use_temporalComp', 'svm_model','cross_val']
+	'use_counterFact', 'use_temporalComp', 'svm_model', 'svm_degree','cross_val']
 
 	###
 	# Number of Examples
@@ -202,7 +202,7 @@ def buildChoiceArray():
 	
 
 	
-   	###
+   ###
 	# Feature Creation
 	###
 	choices['use_unigrams'] = {}
@@ -247,11 +247,15 @@ def buildChoiceArray():
 	choices['use_temporalComp']['value'] = -1
 	choices['use_temporalComp']['subs'] = []
 
+	###
+	# Model Selection
+	###
+
 	choices['svm_model'] = {}
 	choices['svm_model']['text'] = 'Choose svm model type?'
 	choices['svm_model']['pos_values'] = {0: 'linear', 1: 'rbf', 2:'poly'}
 	choices['svm_model']['value'] = -1
-	choices['svm_model']['subs'] = ['svm_degree']
+	choices['svm_model']['subs'] = []
 
 	choices['svm_degree'] = {}
 	choices['svm_degree']['text'] = 'Choose svm model degree?'
