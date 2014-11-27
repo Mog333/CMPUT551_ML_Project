@@ -15,7 +15,6 @@ def createDictFromFile(fileName="../SentiWordNet/SentiWordNet.txt"):
 				newKey = word[:len(word)-2]
 				sentiDict[newKey] = (wordList[2], wordList[3]) # the value is a tuple with positive and negative value
 
-
 	in_file.close()
 
 	return sentiDict
