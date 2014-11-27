@@ -6,7 +6,8 @@ def createListFromFile(fileName):
 
 	wordList = []
 	for line in in_file:
-		wordList.append(line)
+		words = line.split() # do this to remove newline char if there
+		wordList.append(words[0])
 	in_file.close()
 
 	return wordList
