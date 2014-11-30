@@ -52,7 +52,7 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 		print 'Starting preprocessing'
 
 		# handle cache files
-		cacheFilename = 'ppc'
+		cacheFilename = 'ppc' + tweetsFile + "_"
 		dependencies = ['num_examples']
 		dependencies += choices['preprocessing']['subs']
 		for param in dependencies:
@@ -120,7 +120,7 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 		print 'Starting preprocessing'
 
 		# handle cache files
-		cacheFilename = 'ppc'
+		cacheFilename = 'ppc_' + tweetsFile[0:-4] + "_"
 		dependencies = ['num_examples']
 		dependencies += choices['preprocessing']['subs']
 		for param in dependencies:
@@ -168,9 +168,9 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	#	print 'Writing cache file'
 	#	pickle.dump(featureMatrix, open('cache/' + cacheFilename,'wb') )
 	#	print 'Cache file written'
-	featureObject = feature.createFeatureMatrix(tweets, choices)# shape = tweets x features
+	featureObject = feature.createFeatureMatrix(tweets, choices)
 	featureMatrix = featureObject['featureMatrix']	
-	#print(featureMatrix)
+#	print(featureMatrix)
 
 	t1 = time.time()
 	print('FeatureMatrix created (%.2f s)' % (t1-t0))
@@ -187,7 +187,7 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	
 	errorFunc = crossVal.MeanSquaredError
 		
-	result = crossVal.crossVal(tweets, scores, errorFunc, int(choices['cross_num_folds']['value']), featureMatrix)
+	result = crossVal.crossVal(tweets, scores, errorFunc, choices, featureMatrix)
 	t1 = time.time()
 	print('Crossval done (%.2f s)' % (t1-t0))
 	print result

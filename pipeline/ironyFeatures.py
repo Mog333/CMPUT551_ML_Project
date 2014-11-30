@@ -34,7 +34,8 @@ def setFeatureVecForRatio(tweet, featureVector, feature_dict, wordList, key):
 			numTargetWords +=1
 
 
-	index = feature_dict["*&PositiveSum"]
+#	index = feature_dict["*&PositiveSum"]
+	index = feature_dict[key]
 	featureVector[index] = float(numTargetWords)/float(numTotalWords)
 
 	return featureVector
