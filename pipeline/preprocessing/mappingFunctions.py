@@ -86,19 +86,19 @@ def mapEmoticons(token):
 	for match in pos_emot.finditer(splitPunctText):
 		if (match.start() != match.end()):
 			#return ("positiveEmoticonKey")
-			return '*&positive_emoticon'
+			return '*@#positive_emoticon'
 
 
 	for match in neg_emot.finditer(splitPunctText):
 		if (match.start() != match.end()):
 			#return ("negativeEmoticonKey")
-			return '*&negative_emoticon'
+			return '*@#negative_emoticon'
 
 
 	for match in neutral_emot.finditer(splitPunctText):
 		if (match.start() != match.end()):
 			#return ("neutralEmoticonKey")
-			return'*&neutral_emoticon'
+			return'*@#neutral_emoticon'
 
 	return token
 
@@ -118,7 +118,7 @@ def mapLocations(token):
 	f.close()
 
 	if token in locations:
-		return '*&locationKey'
+		return '*@#locationKey'
 
 	return token
 
@@ -135,7 +135,7 @@ def mapBrands(token):
 	f.close()
 
 	if token in brands:
-		return '*&brand'	
+		return '*@#brand'	
 
 	return token
 
@@ -165,17 +165,16 @@ def mapSlangs(token):
 
 
 
-
 def mapHashtag(token):
 	if token[0] == '#':
-		return '*&hash'
+		return '*@#hash'
 	return token
 
 
 def mapAnnotation(token):
 
 	if token[0] == '@':
-		return '*&annotation'
+		return '*@#annotation'
 
 	return token
 
@@ -212,7 +211,7 @@ def mapURL(token):
 	for match in url.finditer(splitPunctText):
 		if (match.start() != match.end()):
 			#return ("positiveEmoticonKey")
-			return '*&link'
+			return '*@#link'
 	
 
 	return token

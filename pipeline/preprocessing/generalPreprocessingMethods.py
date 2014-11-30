@@ -26,6 +26,7 @@ def removeCharacterRepetitions(tweet):
 					new_tweet += tweet[ch]
 		return new_tweet
 
+		
 
 #Remove tweet names like @robpost
 def removeTwitterNames(tweet):

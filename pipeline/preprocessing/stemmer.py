@@ -35,6 +35,19 @@ def morphing_wordnet(token):
 		token
 
 
+def hypermin_wordnet(token):
+	from nltk.corpus import wordnet as wn
+	word = wn.synsets(token)
+	if (len(word) > 0):
+		hypernym = word[0].hypernyms()
+		if (len(hypernym) > 0):
+			#print (token + "\t\t===>\t\t" + (str(hypernym[0]).replace('Synset(\'', '').replace('\')', '').split('.')[0]))
+			return (str(hypernym[0]).replace('Synset(\'', '').replace('\')', '').split('.')[0])
+	
+	return token
+
+
+
 
 """
 # autmomated spelling mistakes corrector

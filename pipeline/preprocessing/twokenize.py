@@ -153,6 +153,8 @@ Hashtag = "#[a-zA-Z0-9_]+"  #optional: lookbehind for \b
 #optional: lookbehind for \b, max length 15
 AtMention = "[@＠][a-zA-Z0-9_]+"
 
+SpecialToken = "\*@#[a-zA-Z0-9_]+"
+
 # I was worried this would conflict with at-mentions
 # but seems ok in sample of 5800: 7 changes all email fixes
 # http://www.regular-expressions.info/email.html
@@ -179,7 +181,8 @@ Protected  = re.compile(
         decorations,
         embeddedApostrophe,
         Hashtag,  
-        AtMention
+        AtMention,
+        SpecialToken
     ).decode('utf-8')), re.UNICODE)
 
 # Edge punctuation

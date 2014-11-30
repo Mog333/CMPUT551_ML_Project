@@ -56,6 +56,7 @@ def preprocess(tweet_list, choices):
 		# map emoticons to positive, negative and neutral (unknown)
 		if(choices['pre_map_emoticons']['value'] == 1):
 			from mappingFunctions import mapEmoticons
+			from twokenize import tokenizeRawTweetText
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
 				tweet = tweet.replace(token, mapEmoticons(token))
@@ -63,6 +64,7 @@ def preprocess(tweet_list, choices):
 
 		# map brands to a brand key word
 		if(choices['pre_map_brands']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			from mappingFunctions import mapBrands
 			for token in tweet_tokens:
@@ -71,6 +73,7 @@ def preprocess(tweet_list, choices):
 
 		# slang mapping
 		if(choices['pre_map_slang']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			from mappingFunctions import mapSlangs
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
@@ -81,6 +84,7 @@ def preprocess(tweet_list, choices):
 
 		# map urls to url key word
 		if(choices['pre_map_url']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			from mappingFunctions import mapURL
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
@@ -92,6 +96,7 @@ def preprocess(tweet_list, choices):
 		
 		# map hashtags
 		if(choices['pre_map_hastags']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			from mappingFunctions import mapHashtag
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
@@ -101,6 +106,7 @@ def preprocess(tweet_list, choices):
 
 		# map anotations
 		if(choices['pre_map_anotations']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			from mappingFunctions import mapAnnotation
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
@@ -124,24 +130,55 @@ def preprocess(tweet_list, choices):
 		####################################################################
 		#STEMMERS SECTION
 		if(choices['pre_stemmer_regexp']['value'] == 1):
+			from twokenize import tokenizeRawTweetText
 			from stemmer import stemmer_regexp
-			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
-				tweet = tweet.replace(token, stemmer_regexp(token))
+
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if ((token[0:2] == '*@#') or (token[0] == '#') or (token[0] == '@' )):
+					token_temp.append(token)
+				else:
+					token_temp.append(stemmer_regexp(token))
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+
+
 
 
 		if(choices['pre_stemmer_wordnet']['value'] == 1):
 			from stemmer import stemmer_wordnet
-			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
-				tweet = tweet.replace(token, stemmer_wordnet(token))
+			from twokenize import tokenizeRawTweetText
+
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if ((token[0:2] == '*@#') or (token[0] == '#') or (token[0] == '@' )):
+					token_temp.append(token)
+				else:
+					token_temp.append(stemmer_wordnet(token))
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+
 
 
 		if(choices['pre_stemmer_lancaster']['value'] == 1):
 			from stemmer import stemmer_lancaster
-			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
-				tweet = tweet.replace(token, stemmer_lancaster(token))
+			from twokenize import tokenizeRawTweetText
+
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if ((token[0:2] == '*@#') or (token[0] == '#') or (token[0] == '@' )):
+					token_temp.append(token)
+				else:
+					token_temp.append(stemmer_lancaster(token))
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+
 
 		
 
@@ -149,15 +186,47 @@ def preprocess(tweet_list, choices):
 		# morphing
 		if(choices['pre_morphing_wordnet']['value'] == 1):
 			from nltk.corpus import wordnet as wn
+			from twokenize import tokenizeRawTweetText
 			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
 
-				word = wn.morphy(token)
-				if (str(word).strip() != 'None'):
-					tweet = tweet.replace(token, word)
-						
-					
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if ((token[0:2] == '*@#') or (token[0] == '#') or (token[0] == '@' )):
+					token_temp.append(token)
+				else:
+					word = wn.morphy(token)
+					if (str(word).strip() != 'None'):
+						token_temp.append(word)
+					else:
+						token_temp.append(token)
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+
+
 				
+						
+
+					
+		#hypernims
+		if(choices['pre_hypermin_wordnet']['value'] == 1):
+			from stemmer import hypermin_wordnet
+			from nltk import word_tokenize
+			from nltk.tokenize import RegexpTokenizer
+			from twokenize import tokenizeRawTweetText
+
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if ((token[0:2] == '*@#') or (token[0] == '#') or (token[0] == '@' )):
+					token_temp.append(token)
+				else:
+					token_temp.append(hypermin_wordnet(token))
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+			
 
 		#END OF STEMMERS SECTION
 		####################################################################
@@ -168,20 +237,22 @@ def preprocess(tweet_list, choices):
 			from grammarFixer import correct
 			from nltk import word_tokenize
 			from nltk.tokenize import RegexpTokenizer
+			from twokenize import tokenizeRawTweetText
 			tokenizer = RegexpTokenizer(r'\w+')
 			tweet_temp = tweet
 
 			tweet_tokens = tokenizeRawTweetText(tweet)
 			for token in tweet_tokens:
-				if (token[:2] == '*&'):
+				if ((token[:2] == '*@#') or (token[:1] == '#')):
 					tweet_temp = tweet_temp.replace(token, '')
 
 			tweet_tokens = tokenizer.tokenize(tweet_temp)
 			for token in tweet_tokens:
 				# remove punctuation
-				token 
+				
 				token_temp = correct(token)
 				if token_temp != token:
+					
 					tweet = tweet.replace(token, token_temp)
 		
 
@@ -194,3 +265,33 @@ def preprocess(tweet_list, choices):
 	pipeline_tools.statusbar(1, 'Preprocessing')
 
 	return tweet_list
+
+
+
+
+def token_replacer(tweet, t_ini, t_fin):
+	
+	tweet_final = ""
+	counter = 0
+	while (len(tweet) > 0):
+		pos_start = tweet.find(t_ini[counter])
+		
+		# check if the token is not set to the special character
+		if ((t_ini[counter][0:2] == '*@#') or (t_ini[counter][0] == '#') or (t_ini[counter][0] == '@' )):
+			tweet_final += tweet[0:pos_start] + t_ini[counter]
+		else:
+			# add to the new tweet everything what was before the token
+			tweet_final += tweet[0:pos_start] + t_fin[counter]
+			
+		tweet = tweet[pos_start + len(t_ini[counter]): ]
+
+		counter += 1
+		if (counter == len(t_ini)):
+			tweet_final += tweet.replace(t_ini[counter - 1], "")
+			tweet = ""
+		
+	return tweet_final
+
+
+
+

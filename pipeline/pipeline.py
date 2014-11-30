@@ -2,6 +2,7 @@ import json
 import time
 import sys
 import os
+import sklearn
 from sklearn import cross_validation
 from sklearn import svm
 import numpy as np

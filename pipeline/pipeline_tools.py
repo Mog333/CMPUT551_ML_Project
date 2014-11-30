@@ -15,6 +15,7 @@ def buildChoiceArray():
 	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment',
 	'use_counterFact', 'use_temporalComp', 'cross_val']
 
+
 	###
 	# Number of Examples
 	###
@@ -35,7 +36,7 @@ def buildChoiceArray():
 		'pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang',
 		'pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date',
 		'pre_map_iterjections', 'pre_stemmer_regexp', 'pre_stemmer_wordnet', 'pre_stemmer_lancaster', 
-		'pre_morphing_wordnet', 'pre_automated_gramma_corector']
+		'pre_morphing_wordnet', 'pre_automated_gramma_corector', 'pre_hypermin_wordnet']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -193,6 +194,12 @@ def buildChoiceArray():
 	choices['pre_morphing_wordnet']['value'] = -1
 	choices['pre_morphing_wordnet']['subs'] = []
 
+	# stemmer_lancaster
+	choices['pre_hypermin_wordnet'] = {}
+	choices['pre_hypermin_wordnet']['text'] = 'Use Hypernims?'
+	choices['pre_hypermin_wordnet']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_hypermin_wordnet']['value'] = -1
+	choices['pre_hypermin_wordnet']['subs'] = []
 
 	choices['pre_automated_gramma_corector'] = {}
 	choices['pre_automated_gramma_corector']['text'] = 'Automatic grammar correction?'
