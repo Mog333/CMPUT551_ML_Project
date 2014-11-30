@@ -83,8 +83,12 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 	t1 = time.time()
 	print('FeatureMatrix created (%.2f s)' % (t1-t0))
 
+	modelDict = {0: 'linear', 1: 'rbf', 2:'poly'}
+	modelType = modelDict[choices['svm_model']['value']]
+	modelDegree = choices['svm_degree']['value']
+
 	t0 = time.time()
-	clf = svm.SVR(kernel='linear')
+	clf = svm.SVR(modelType, degree = modelDegree)
 	clf.fit(featureMatrix, scores)
 	t1 = time.time()
 	print('Model trained (%.2f s)' % (t1-t0))
