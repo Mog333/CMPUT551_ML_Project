@@ -200,6 +200,56 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	featureObject['choices'] = choices
 	return featureObject
 
+###
+#	Accept a list of ini files, run pipeline on all files and log crossval errors in modeloutput.txt
+###
+def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
+	loadedTweets = pt.getTweetsFromFile( -1 , tweetsFile)
+	loadedScores = pt.getTweetScoresFromFile( -1, scoresFile)
+	outputFile = open(outputFilename, 'w')
+
+	crossval_errors = []
+	for ini_file in ini_files:
+		outputFile.write("Choices File: " + ini_file + "\n")
+		choices = pipeline_tools.buildChoiceArray()
+		choices = pipeline_tools.ask(choices, ini_filename = ini_file)
+		tweets = loadedTweets[0:int(choices['num_examples']['value'])]
+		scores = loadedScores[0:int(choices['num_examples']['value'])]
+
+		if(choices['preprocessing']['value']):
+			t0 = time.time()
+
+			# handle cache files
+			cacheFilename = 'ppc_' + tweetsFile[0:-4] + "_"
+			dependencies = ['num_examples']
+			dependencies += choices['preprocessing']['subs']
+			for param in dependencies:
+				cacheFilename += '_' + str(choices[param]['value'])
+			cacheFilename += '.cache'
+
+			if os.path.isfile('cache/' + cacheFilename):
+				tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
+			else:
+				tweets = preprocessTweets.preprocess(tweets, choices)
+				pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
+			t1 = time.time()
+			outputFile.write("\t" + 'Preprocessing done (%.2f s)\n' % (t1-t0))
+
+		t0 = time.time()
+		featureObject = feature.createFeatureMatrix(tweets, choices)
+		featureMatrix = featureObject['featureMatrix']	
+		t1 = time.time()
+		outputFile.write("\t" + 'FeatureMatrix created (%.2f s)\n' % (t1-t0))
+
+		t0 = time.time()
+		errorFunc = crossVal.MeanSquaredError
+		result = crossVal.crossVal(tweets, scores, errorFunc, choices, featureMatrix)
+		t1 = time.time()
+		outputFile.write("\t" + 'Crossval time (%.2f s)\n' % (t1-t0))
+		outputFile.write("\t" + "Results: " + str(result) + "\n")
+
+	outputFile.close()
+
 if __name__ == "__main__":
 	filename = ''
 	if(len(sys.argv) >= 2):

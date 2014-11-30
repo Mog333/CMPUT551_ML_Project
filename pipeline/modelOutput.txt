@@ -1,0 +1,10 @@
+Choices File: modelChoices/init1.ini
+	Preprocessing done (0.10 s)
+	FeatureMatrix created (0.28 s)
+	Crossval time (0.03 s)
+	Results: [1.7751566295450218, 3.1986508931353059, 2.3985565047099882, 0.94723739650879735, 0.72862999793184902]
+Choices File: modelChoices/init2.ini
+	Preprocessing done (20.54 s)
+	FeatureMatrix created (0.29 s)
+	Crossval time (0.09 s)
+	Results: [3.2836044396195256, 2.417514942429686, 2.9468656745399318, 2.1486179382784805, 2.0312362404598856]
