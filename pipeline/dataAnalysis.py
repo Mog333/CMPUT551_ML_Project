@@ -9,10 +9,30 @@ import pipeline_tools
 import pipeline
 import os
 import pickle
+
 import sys
 from nltk.stem.lancaster import LancasterStemmer
 from preprocessing import preprocessTweets
 
+def findBaseLineError():
+	scores = pt.getTweetScoresFromFile(-1, "scores.txt")
+	total = 0
+	
+	for score in scores:
+		total += score
+	
+	mean = total / len(scores)
+	print("mean: " + str(mean))
+	MSE = 0
+	ADE = 0
+	
+	for score in scores:
+		ADE += abs(score - mean)		
+		MSE += (score - mean)**2
+	MSE /= len(scores)
+	ADE /= len(scores)
+	print("MSE: "+str(MSE))
+	print("ADE: " + str(ADE))
 
 def plotScoreHistogram():
 	scores = pt.getTweetScoresFromFile(-1, "scores.txt")

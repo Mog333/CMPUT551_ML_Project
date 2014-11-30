@@ -13,7 +13,7 @@ def addNGramToDict(tweetList, bow_dict, gramNum = 1, numFeatures = -1):
       #for each tweet build a list of grams (ie list of words, or bigrams etc)
       gramList= list(nltk.ngrams(tweet.split(), gramNum))
       for gram in gramList:
-         if gramNum != 1 and gram[0][0:2] == '*&':
+         if gramNum != 1 and (gram[0][0:2] == '*&' or gram[0][0:3] == '*@&'):
             #skip all non unigrams with special tokens
             continue
          if gram in newFeaturesDict:
