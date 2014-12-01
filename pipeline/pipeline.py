@@ -206,10 +206,11 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	loadedTweets = pt.getTweetsFromFile( -1 , tweetsFile)
 	loadedScores = pt.getTweetScoresFromFile( -1, scoresFile)
-	outputFile = open(outputFilename, 'w')
+	outputFile = open(outputFilename, 'a')
 
 	crossval_errors = []
 	for ini_file in ini_files:
+		print("\n\nNew Model file: " + ini_file +"\n\n")
 		outputFile.write("Choices File: " + ini_file + "\n")
 		choices = pipeline_tools.buildChoiceArray()
 		choices = pipeline_tools.ask(choices, ini_filename = ini_file)
@@ -240,6 +241,7 @@ def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 
 		featureMatrix = featureObject['featureMatrix']	
 		t1 = time.time()
 		outputFile.write("\t" + 'FeatureMatrix created (%.2f s)\n' % (t1-t0))
+		outputFile.write("\tFeatureMatrix has shape: " + str(featureMatrix.shape))
 
 		t0 = time.time()
 		errorFunc = crossVal.MeanSquaredError

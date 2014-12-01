@@ -1,0 +1,74 @@
+1 - NO preprocessing - all unigrams
+2 - NO preprocessing - 17.5k unigrams, 2.5k bigrams,
+3 - NO preprocessing - 17.5k unigrams, 2.5k bigrams, using sentiment dict, using counterFact, using temporalComp
+
+Preprocessing steps for 4,5,6:
+ 
+pre_lower_chars 
+pre_appostrophy
+pre_repetitions 
+pre_remove_twitter_names
+pre_normalize
+pre_tokenize
+
+All use 17.5k unigrams, 2.5k bigrams
+
+4 - Linear kernel - Sentidict, counterfact, temporal
+5 - RBF kernel (degree 3) - Sentidict, counterfact, temporal
+6 - Linear kernel 
+
+Preprocessing steps for 7,8,9:
+
+pre_lower_chars
+pre_appostrophy 
+pre_repetitions 
+pre_remove_twitter_names
+pre_normalize 
+pre_tokenize 
+pre_map_emoticons 
+pre_map_brands
+pre_map_slang 
+pre_map_url
+pre_map_image
+pre_map_hastags
+pre_map_anotations
+
+All use 17.5k unigrams, 2.5k bigrams
+
+7 - Linear kernel - Sentidict, counterfact, temporal
+8 - RBF kernel (degree 3) - Sentidict, counterfact, temporal
+9 - Linear kernel 
+
+
+Preprocessing steps for 10,11,12:
+
+pre_lower_chars
+pre_appostrophy
+pre_repetitions
+pre_remove_twitter_names 
+pre_normalize 
+pre_tokenize 
+pre_map_emoticons 
+pre_map_brands 
+pre_map_slang 
+pre_map_url 
+pre_map_image 
+pre_map_hastags 
+pre_map_anotations 
+pre_map_time 
+pre_map_date 
+pre_map_iterjections 
+pre_stemmer_lancaster
+pre_automated_gramma_corector
+
+10 - 17.5k unigrams, 2.5k bigrams - Linear kernel - Sentidict, counterfact, tempora
+11 - 17.5k unigrams, 2.5k bigrams - RBF kernel - Sentidict, counterfact, tempora
+12 - 10k unigrams, 1.5k bigrams - Linear kernel - Sentidict, counterfact, tempora
+
+
+13 - base line no preprocessing - linear kernel - Sentidict, counterfact, tempora
+14 - base line no preprocessing - RBF kernel - Sentidict, counterfact, tempora
+
+15 - same preprocessing as 4,5,6 + grammar correction linear kernel - Sentidict, counterfact, tempora
+
+
