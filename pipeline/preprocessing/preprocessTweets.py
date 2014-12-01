@@ -129,6 +129,12 @@ def preprocess(tweet_list, choices):
 
 		####################################################################
 		#STEMMERS SECTION
+		if((choices['pre_automated_gramma_corector']['value'] == 1) and 
+			(choices['pre_automated_gramma_corector_first']['value'] == 1)):
+			do_automated_gramma_corector(tweet)
+			
+			
+
 		if(choices['pre_stemmer_regexp']['value'] == 1):
 			from twokenize import tokenizeRawTweetText
 			from stemmer import stemmer_regexp
@@ -226,34 +232,16 @@ def preprocess(tweet_list, choices):
 					token_temp.append(hypermin_wordnet(token))
 
 			tweet = token_replacer(tweet, token_list, token_temp)
+		
+		if((choices['pre_automated_gramma_corector']['value'] == 1) and 
+			(choices['pre_automated_gramma_corector_first']['value'] == 0)):
+			do_automated_gramma_corector(tweet)
 			
 
 		#END OF STEMMERS SECTION
 		####################################################################
 
-		# grammar corrector
 		
-		if(choices['pre_automated_gramma_corector']['value'] == 1):
-			from grammarFixer import correct
-			from nltk import word_tokenize
-			from nltk.tokenize import RegexpTokenizer
-			from twokenize import tokenizeRawTweetText
-			tokenizer = RegexpTokenizer(r'\w+')
-			tweet_temp = tweet
-
-			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
-				if ((token[:2] == '*@#') or (token[:1] == '#')):
-					tweet_temp = tweet_temp.replace(token, '')
-
-			tweet_tokens = tokenizer.tokenize(tweet_temp)
-			for token in tweet_tokens:
-				# remove punctuation
-				
-				token_temp = correct(token)
-				if token_temp != token:
-					
-					tweet = tweet.replace(token, token_temp)
 		
 
 		#print ('\n' + tweet)
@@ -293,5 +281,25 @@ def token_replacer(tweet, t_ini, t_fin):
 	return tweet_final
 
 
+def do_automated_gramma_corector(tweet):
+	from grammarFixer import correct
+	from nltk import word_tokenize
+	from nltk.tokenize import RegexpTokenizer
+	from twokenize import tokenizeRawTweetText
+	tokenizer = RegexpTokenizer(r'\w+')
+	tweet_temp = tweet
 
+	tweet_tokens = tokenizeRawTweetText(tweet)
+	for token in tweet_tokens:
+		if ((token[:2] == '*@#') or (token[:1] == '#')):
+			tweet_temp = tweet_temp.replace(token, '')
 
+	tweet_tokens = tokenizer.tokenize(tweet_temp)
+	for token in tweet_tokens:
+		# remove punctuation
+				
+		token_temp = correct(token)
+		if token_temp != token:
+			tweet = tweet.replace(token, token_temp)
+
+	return tweet
