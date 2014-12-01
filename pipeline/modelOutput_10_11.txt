@@ -1,0 +1,10 @@
+Choices File: modelChoices/10.ini
+	Preprocessing done (1759.31 s)
+	FeatureMatrix created (4.23 s)
+	FeatureMatrix has shape: (8000, 15621)	Crossval time (6660.59 s)
+	Results: [2.1428148061676966, 2.3174330571001871, 2.4024283005460418, 2.2541517642868865, 2.6508825067548498]
+Choices File: modelChoices/11.ini
+	Preprocessing done (0.17 s)
+	FeatureMatrix created (6.14 s)
+	FeatureMatrix has shape: (8000, 15621)	Crossval time (6873.06 s)
+	Results: [1.863682580696115, 1.9776160069727098, 1.8934188694650476, 1.8480474874319202, 2.3682988638800442]
