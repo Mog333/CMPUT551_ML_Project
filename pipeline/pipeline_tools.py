@@ -36,7 +36,8 @@ def buildChoiceArray():
 		'pre_repetitions','pre_normalize','pre_tokenize','pre_map_emoticons','pre_map_brands','pre_map_slang',
 		'pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date',
 		'pre_map_iterjections', 'pre_stemmer_regexp', 'pre_stemmer_wordnet', 'pre_stemmer_lancaster', 
-		'pre_morphing_wordnet', 'pre_automated_gramma_corector', 'pre_hypermin_wordnet']
+		'pre_morphing_wordnet', 'pre_automated_gramma_corector', 'pre_hypermin_wordnet', 
+		'pre_automated_gramma_corector_first']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -201,11 +202,19 @@ def buildChoiceArray():
 	choices['pre_hypermin_wordnet']['value'] = -1
 	choices['pre_hypermin_wordnet']['subs'] = []
 
+	# grammar corrector
 	choices['pre_automated_gramma_corector'] = {}
 	choices['pre_automated_gramma_corector']['text'] = 'Automatic grammar correction?'
 	choices['pre_automated_gramma_corector']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['pre_automated_gramma_corector']['value'] = -1
 	choices['pre_automated_gramma_corector']['subs'] = []
+
+	# grammar corrector order
+	choices['pre_automated_gramma_corector_first'] = {}
+	choices['pre_automated_gramma_corector_first']['text'] = 'Automatic grammar correction first?'
+	choices['pre_automated_gramma_corector_first']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_automated_gramma_corector_first']['value'] = -1
+	choices['pre_automated_gramma_corector_first']['subs'] = []
 	
 
 	
