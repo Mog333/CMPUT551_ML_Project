@@ -37,7 +37,7 @@ def buildChoiceArray():
 		'pre_map_url','pre_map_image','pre_map_hastags','pre_map_anotations','pre_map_time','pre_map_date',
 		'pre_map_iterjections', 'pre_stemmer_regexp', 'pre_stemmer_wordnet', 'pre_stemmer_lancaster', 
 		'pre_morphing_wordnet', 'pre_automated_gramma_corector', 'pre_hypermin_wordnet', 
-		'pre_automated_gramma_corector_first']
+		'pre_automated_gramma_corector_first', 'pre_drop_stop_words']
 
 	# lower characters
 	choices['pre_lower_chars'] = {}
@@ -59,6 +59,13 @@ def buildChoiceArray():
 	choices['pre_repetitions']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['pre_repetitions']['value'] = -1
 	choices['pre_repetitions']['subs'] = []
+
+	choices['pre_drop_stop_words'] = {}
+	choices['pre_drop_stop_words']['text'] = 'Drop stop words?'
+	choices['pre_drop_stop_words']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['pre_drop_stop_words']['value'] = -1
+	choices['pre_drop_stop_words']['subs'] = []
+
 
 	# remove twitter names. 
 	choices['pre_remove_twitter_names'] = {}

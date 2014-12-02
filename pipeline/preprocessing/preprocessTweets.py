@@ -40,6 +40,29 @@ def preprocess(tweet_list, choices):
 			from twokenize import normalizeTextForTagger
 			tweet = normalizeTextForTagger(tweet)
 
+
+		
+		if(choices['pre_drop_stop_words']['value'] == 1):
+			from nltk.corpus import stopwords
+			stopset = set(stopwords.words('english'))
+			from twokenize import tokenizeRawTweetText
+			
+			token_list = tokenizeRawTweetText(tweet)
+			token_temp = []
+
+			for token in token_list:
+				if token not in stopset:
+					token_temp.append(token)
+				else:
+					# in order to satisfy req for token_replacer
+					# which is that token_list token_temp must 
+					# have equal length
+					token_temp.append(' ')
+
+			tweet = token_replacer(tweet, token_list, token_temp)
+		
+
+
 		# Tokenize! This tokenizer understands emoticons, urls, anotations,
 		# hashtags. Repeated the import statement just show where methods
 		# come from
@@ -133,7 +156,7 @@ def preprocess(tweet_list, choices):
 			(choices['pre_automated_gramma_corector_first']['value'] == 1)):
 			do_automated_gramma_corector(tweet)
 			
-			
+
 
 		if(choices['pre_stemmer_regexp']['value'] == 1):
 			from twokenize import tokenizeRawTweetText
