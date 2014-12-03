@@ -76,13 +76,7 @@ def preprocess(tweet_list, choices):
 
 		from twokenize import tokenizeRawTweetText
 
-		# map emoticons to positive, negative and neutral (unknown)
-		if(choices['pre_map_emoticons']['value'] == 1):
-			from mappingFunctions import mapEmoticons
-			from twokenize import tokenizeRawTweetText
-			tweet_tokens = tokenizeRawTweetText(tweet)
-			for token in tweet_tokens:
-				tweet = tweet.replace(token, mapEmoticons(token))
+		
 
 
 		# map brands to a brand key word
@@ -114,6 +108,15 @@ def preprocess(tweet_list, choices):
 				tweet = tweet.replace(token, mapURL(token))
 
 
+		# map emoticons to positive, negative and neutral (unknown)
+		if(choices['pre_map_emoticons']['value'] == 1):
+			from mappingFunctions import mapEmoticons
+			from twokenize import tokenizeRawTweetText
+			tweet_tokens = tokenizeRawTweetText(tweet)
+			for token in tweet_tokens:
+				tweet = tweet.replace(token, mapEmoticons(token))
+
+		
 		# map images to image key word
 		#if(choices['pre_map_image']['value'] == 1):
 		
