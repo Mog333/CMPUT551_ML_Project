@@ -47,11 +47,12 @@ def preprocess(tweet_list, choices):
 			stopset = set(stopwords.words('english'))
 			from twokenize import tokenizeRawTweetText
 			
+			negations = ['no', 'not']
 			token_list = tokenizeRawTweetText(tweet)
 			token_temp = []
 
 			for token in token_list:
-				if token not in stopset:
+				if ((token not in stopset) or (token in negations)):
 					token_temp.append(token)
 				else:
 					# in order to satisfy req for token_replacer
@@ -59,7 +60,10 @@ def preprocess(tweet_list, choices):
 					# have equal length
 					token_temp.append(' ')
 
+			# for future, need to be implemented a better way to eliminate
+			# duplicate spaces
 			tweet = token_replacer(tweet, token_list, token_temp)
+			tweet = tweet.replace('  ', ' ')
 		
 
 
