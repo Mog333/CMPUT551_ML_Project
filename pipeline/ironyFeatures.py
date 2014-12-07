@@ -41,7 +41,45 @@ def setFeatureVecForRatio(tweet, featureVector, feature_dict, wordList, key):
 	return featureVector
 
 
+# this is a function to see how many tweets actually have any temporal comp or counterfactuality
+def testDataSet():
+	import tweetUtils as tu
+	tweets = tu.getTweetsFromFile(8000, "tweets.txt")
+	cfList = createListFromFile("../Irony/counterFactuality.txt")
+	tcList = createListFromFile("../Irony/temporalCompression.txt")
+	numTweetsWithCF = 0
+	numTweetsWithTC = 0
+	numTotalCF = 0
+	numTotalTC = 0
+
+	for tweet in tweets:
+		tcFlag = 0
+		cfFlag = 0
+		tweetAsList = tweet.split()
+		for word in tweetAsList:
+			if word in cfList:
+				numTotalCF += 1
+				tcFlag = 1
+			elif word in tcList:
+				numTotalTC += 1
+				cfFlag = 1
+		if cfFlag == 1:
+			numTweetsWithCF += 1
+		elif tcFlag == 1:
+			numTweetsWithTC += 1
+
+	print("The total number of temporal compression words in the dataset = " + str(numTotalTC) )
+
+	print("The total number of counterfactuality words in the dataset = " + str(numTotalCF) )
+
+	print("The number of tweets conatining a temporal compression word  = " + str(numTweetsWithTC) )
+
+	print("The number of tweets conatining a counterfactuality word  = " + str(numTweetsWithCF) )
 
 
+
+
+if __name__ == "__main__":
+	testDataSet()
 
 
