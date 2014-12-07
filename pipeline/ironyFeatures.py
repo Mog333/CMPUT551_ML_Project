@@ -41,6 +41,13 @@ def setFeatureVecForRatio(tweet, featureVector, feature_dict, wordList, key):
 	return featureVector
 
 
+def initDictFromList(list):
+	returnDict = {}
+	for word in list:
+		returnDict[word] = 0
+	return returnDict
+
+
 # this is a function to see how many tweets actually have any temporal comp or counterfactuality
 def testDataSet():
 	import tweetUtils as tu
@@ -52,6 +59,9 @@ def testDataSet():
 	numTotalCF = 0
 	numTotalTC = 0
 
+	cfDict = initDictFromList(cfList)
+	tcDict = initDictFromList(tcList)
+
 	for tweet in tweets:
 		tcFlag = 0
 		cfFlag = 0
@@ -59,22 +69,29 @@ def testDataSet():
 		for word in tweetAsList:
 			if word in cfList:
 				numTotalCF += 1
-				tcFlag = 1
+				cfFlag = 1
+				cfDict[word] += 1
 			elif word in tcList:
 				numTotalTC += 1
-				cfFlag = 1
+				tcFlag = 1
+				tcDict[word] += 1
 		if cfFlag == 1:
 			numTweetsWithCF += 1
 		elif tcFlag == 1:
 			numTweetsWithTC += 1
 
 	print("The total number of temporal compression words in the dataset = " + str(numTotalTC) )
+	print("The number of tweets containing a temporal compression word  = " + str(numTweetsWithTC) )
+	print("The temporal compression word count dictionary :")
+	print(tcDict)
+	print("")
 
 	print("The total number of counterfactuality words in the dataset = " + str(numTotalCF) )
+	print("The number of tweets containing a counterfactuality word  = " + str(numTweetsWithCF) )
+	print("The counterfactuality word count dictionary :")
+	print(cfDict)
+	print("")
 
-	print("The number of tweets conatining a temporal compression word  = " + str(numTweetsWithTC) )
-
-	print("The number of tweets conatining a counterfactuality word  = " + str(numTweetsWithCF) )
 
 
 
