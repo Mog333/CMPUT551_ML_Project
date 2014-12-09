@@ -1,0 +1,77 @@
+Choices File: modelChoices/13.ini
+	FeatureMatrix created (1.43 s)
+	FeatureMatrix has shape: (8000, 4)	Crossval time (9.55 s)
+	Results: [1.8685950625355807, 1.9836525875677729, 1.894637093819513, 1.8601025832189864, 2.3799320126637418]
+Choices File: modelChoices/14.ini
+	FeatureMatrix created (1.23 s)
+	FeatureMatrix has shape: (8000, 4)	Crossval time (15.75 s)
+	Results: [1.8709036824366891, 1.9785943214536801, 1.8878726327903805, 1.8582909629107829, 2.3726575245086052]
+Choices File: modelChoices/15.ini
+	Preprocessing done (197.56 s)
+	FeatureMatrix created (1.28 s)
+	FeatureMatrix has shape: (8000, 4)	Crossval time (10.11 s)
+	Results: [1.872716779534443, 1.9859534776475991, 1.8917061342141377, 1.8586501797185613, 2.3793085214364664]
+Choices File: modelChoices/13.ini
+	FeatureMatrix created (1.28 s)
+	FeatureMatrix has shape: (8000, 4)	Crossval time (9.52 s)
+	Results: [1.8685950625355807, 1.9836525875677729, 1.894637093819513, 1.8601025832189864, 2.3799320126637418]
+Choices File: modelChoices/14.ini
+	FeatureMatrix created (1.23 s)
+	FeatureMatrix has shape: (8000, 4)	Crossval time (15.51 s)
+	Results: [1.8709036824366891, 1.9785943214536801, 1.8878726327903805, 1.8582909629107829, 2.3726575245086052]
+Choices File: modelChoices/4.ini
+	Preprocessing done (2.97 s)
+	FeatureMatrix created (3.81 s)
+	FeatureMatrix has shape: (8000, 20004)	Crossval time (6498.02 s)
+	Results: [2.0404147378001012, 2.1921451127107203, 2.1848589504312468, 2.1506367904098398, 2.3672400863790481]
+Choices File: modelChoices/5.ini
+	Preprocessing done (1.33 s)
+	FeatureMatrix created (7.58 s)
+	FeatureMatrix has shape: (8000, 20004)	Crossval time (6008.30 s)
+	Results: [1.8591104989210712, 1.9717410052352375, 1.888898869439795, 1.8443972317906328, 2.3620920108562795]
+Choices File: modelChoices/6.ini
+	Preprocessing done (0.08 s)
+	FeatureMatrix created (2.92 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (6362.77 s)
+	Results: [2.0413009960231752, 2.1948158700670586, 2.1899243619607143, 2.1544676974324877, 2.3698634932457949]
+Choices File: modelChoices/7.ini
+	Preprocessing done (863.04 s)
+	FeatureMatrix created (2.61 s)
+	FeatureMatrix has shape: (8000, 19676)	Crossval time (8403.84 s)
+	Results: [1.827907353168196, 2.057676931151879, 1.9825233165740739, 2.0226162986752958, 2.2793154569914851]
+Choices File: modelChoices/8.ini
+	Preprocessing done (0.16 s)
+	FeatureMatrix created (2.14 s)
+	FeatureMatrix has shape: (8000, 19676)	Crossval time (7079.15 s)
+	Results: [1.8694362796555186, 1.984349576385001, 1.8988193175576211, 1.8547513548586023, 2.3750010273226874]
+Choices File: modelChoices/9.ini
+	Preprocessing done (0.07 s)
+	FeatureMatrix created (1.51 s)
+	FeatureMatrix has shape: (8000, 19672)	Crossval time (8145.58 s)
+	Results: [1.8297282438469418, 2.0547331311187103, 1.9810379415764339, 2.0239765061535677, 2.277954916721308]
+
+
+
+
+
+
+Choices File: modelChoices/35.ini
+	Preprocessing done (0.07 s)
+	FeatureMatrix created (1.20 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5379.97 s)
+	Results: [1.8036090574278871, 1.9474194337636306, 2.0137731846309475, 2.0614306983927317, 2.1953143660303134]
+Choices File: modelChoices/36.ini
+	Preprocessing done (6.91 s)
+	FeatureMatrix created (1.30 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5313.67 s)
+	Results: [1.7965216329822082, 1.9390625580024607, 2.0142602598098027, 2.0679037675415644, 2.2152834065892635]
+Choices File: modelChoices/37.ini
+	Preprocessing done (2.31 s)
+	FeatureMatrix created (1.32 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5334.04 s)
+	Results: [1.7872222210647903, 1.9539701176575723, 2.0164471811114479, 2.0774290621555873, 2.1894993859710628]
+Choices File: modelChoices/38.ini
+	Preprocessing done (2.30 s)
+	FeatureMatrix created (1.30 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5327.55 s)
+	Results: [1.8039443377878015, 1.9219628107282114, 2.0396621326582913, 2.0443628811526278, 2.2438835827015704]
