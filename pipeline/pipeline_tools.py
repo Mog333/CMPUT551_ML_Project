@@ -13,7 +13,7 @@ def buildChoiceArray():
 	choices['global']['pos_values'] = ''
 	choices['global']['value'] = -1
 	choices['global']['subs'] = ['num_examples','preprocessing','use_unigrams','use_bigrams', 'use_sentiment',
-	'use_counterFact', 'use_temporalComp', 'svm_model', 'svm_degree','cross_val']
+	'use_counterFact', 'use_temporalComp', 'use_POStagging', 'svm_model', 'svm_degree','cross_val']
 
 
 	###
@@ -269,6 +269,12 @@ def buildChoiceArray():
 	choices['use_temporalComp']['pos_values'] = {0: 'No', 1: 'Yes'}
 	choices['use_temporalComp']['value'] = -1
 	choices['use_temporalComp']['subs'] = []
+
+	choices['use_POStagging'] = {}
+	choices['use_POStagging']['text'] = 'use part of speech tagging?'
+	choices['use_POStagging']['pos_values'] = {0: 'No', 1: 'Yes'}
+	choices['use_POStagging']['value'] = -1
+	choices['use_POStagging']['subs'] = []
 
 	###
 	# Model Selection

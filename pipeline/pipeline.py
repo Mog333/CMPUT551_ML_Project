@@ -203,8 +203,9 @@ def main(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 ###
 #	Accept a list of ini files, run pipeline on all files and log crossval errors in modeloutput.txt
 ###
-def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
+def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 'tweets.txt', taggedTweetsFile = 'tagged_tweets.txt', scoresFile = 'scores.txt'):
 	loadedTweets = pt.getTweetsFromFile( -1 , tweetsFile)
+	loadedTaggedTweets = pt.getTweetsFromFile(-1,taggedTweetsFile)
 	loadedScores = pt.getTweetScoresFromFile( -1, scoresFile)
 	outputFile = open(outputFilename, 'a')
 
@@ -214,7 +215,10 @@ def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 
 		outputFile.write("Choices File: " + ini_file + "\n")
 		choices = pipeline_tools.buildChoiceArray()
 		choices = pipeline_tools.ask(choices, ini_filename = ini_file)
-		tweets = loadedTweets[0:int(choices['num_examples']['value'])]
+		if(choices['use_POStagging']['value']):
+			tweets = loadedTaggedTweets[0:int(choices['num_examples']['value'])]
+		else:
+			tweets = loadedTweets[0:int(choices['num_examples']['value'])]
 		scores = loadedScores[0:int(choices['num_examples']['value'])]
 
 		if(choices['preprocessing']['value']):
