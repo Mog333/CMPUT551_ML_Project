@@ -55,7 +55,9 @@ def crossVal(tweets, scores, errorFunc, choices, featureMatrix):
 
 	kf = cross_validation.KFold(lenTweets, n_folds = numFolds) # put in the number of data points and the number of folds
 	cvErrors = [] # store the error for each fold
+	foldNum = 0
 	for train_indices, test_indices in kf:
+		print("Starting fold: " + str(foldNum) + "\n")
 		#print("TRAIN:", train_indices, "TEST:", test_indices)
 		#model = modelTrainFunction(train_indices, tweets, scores)
 		clf = svm.SVR(modelType, degree = modelDegree)
@@ -63,6 +65,7 @@ def crossVal(tweets, scores, errorFunc, choices, featureMatrix):
 		predictions = getPredictionsFromModel(clf, featureMatrix, test_indices)
 		error = evaluatePrediction(predictions, scores, test_indices, errorFunc)
 		cvErrors.append(error)
+		foldNum += 1
 	return cvErrors
 
 

@@ -207,10 +207,10 @@ def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 
 	loadedTweets = pt.getTweetsFromFile( -1 , tweetsFile)
 	loadedTaggedTweets = pt.getTweetsFromFile(-1,taggedTweetsFile)
 	loadedScores = pt.getTweetScoresFromFile( -1, scoresFile)
-	outputFile = open(outputFilename, 'a')
 
 	crossval_errors = []
 	for ini_file in ini_files:
+		outputFile = open(outputFilename, 'a')
 		print("\n\nNew Model file: " + ini_file +"\n\n")
 		outputFile.write("Choices File: " + ini_file + "\n")
 		choices = pipeline_tools.buildChoiceArray()
@@ -253,8 +253,7 @@ def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 
 		t1 = time.time()
 		outputFile.write("\t" + 'Crossval time (%.2f s)\n' % (t1-t0))
 		outputFile.write("\t" + "Results: " + str(result) + "\n")
-
-	outputFile.close()
+		outputFile.close()
 
 if __name__ == "__main__":
 	filename = ''
