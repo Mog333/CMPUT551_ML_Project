@@ -1,0 +1,5 @@
+Choices File: ./heldarModels/78.ini
+	Preprocessing done (2239.32 s)
+	FeatureMatrix created (3.06 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (6029.94 s)
+	Results: [1.8489547050418376, 1.9153020755374681, 1.9737029910820798, 2.0566759881116061, 2.2981902174459754]

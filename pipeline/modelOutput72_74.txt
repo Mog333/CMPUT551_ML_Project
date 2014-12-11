@@ -1,0 +1,16 @@
+Choices File: ./heldarModels/72.ini
+	Preprocessing done (635.31 s)
+	FeatureMatrix created (1.62 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5754.17 s)
+	Results: [1.7563043419070867, 1.9018163355649074, 1.9124374715417445, 1.8975508234329967, 2.1525160118461328]
+Choices File: ./heldarModels/73.ini
+	Preprocessing done (27.97 s)
+	FeatureMatrix created (5.40 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5597.39 s)
+	Results: [1.7339941574168967, 1.8613077162564462, 1.9142296579499787, 1.9083872019442614, 2.1231772444434065]
+Choices File: ./heldarModels/74.ini
+	Preprocessing done (41.97 s)
+	FeatureMatrix created (2.68 s)
+	FeatureMatrix has shape: (8000, 20000)	Crossval time (5954.82 s)
+	Results: [1.7877096273490631, 1.8604627095256705, 1.9537499183996376, 1.971504136324616, 2.1584325774268773]
+Choices File: ./heldarModels/72.ini
