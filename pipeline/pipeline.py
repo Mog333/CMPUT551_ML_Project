@@ -255,6 +255,52 @@ def runModelsAndLog(ini_files, outputFilename = 'modelOutput.txt', tweetsFile = 
 		outputFile.write("\t" + "Results: " + str(result) + "\n")
 		outputFile.close()
 
+def runModelsAndLogCSV(ini_files, outputFilename = 'modelOutput.csv', tweetsFile = 'tweets.txt', taggedTweetsFile = 'tagged_tweets.txt', scoresFile = 'scores.txt'):
+	loadedTweets = pt.getTweetsFromFile( -1 , tweetsFile)
+	loadedTaggedTweets = pt.getTweetsFromFile(-1,taggedTweetsFile)
+	loadedScores = pt.getTweetScoresFromFile( -1, scoresFile)
+
+	crossval_errors = []
+	for ini_file in ini_files:
+		outputFile = open(outputFilename, 'a')
+		print("\n\nNew Model file: " + ini_file +"\n\n")
+		outputFile.write(ini_file + ",")
+		choices = pipeline_tools.buildChoiceArray()
+		choices = pipeline_tools.ask(choices, ini_filename = ini_file)
+		if(choices['use_POStagging']['value']):
+			tweets = loadedTaggedTweets[0:int(choices['num_examples']['value'])]
+		else:
+			tweets = loadedTweets[0:int(choices['num_examples']['value'])]
+		scores = loadedScores[0:int(choices['num_examples']['value'])]
+
+		if(choices['preprocessing']['value']):
+			# handle cache files
+			cacheFilename = 'ppc_' + tweetsFile[0:-4] + "_"
+			dependencies = ['num_examples']
+			dependencies += choices['preprocessing']['subs']
+			for param in dependencies:
+				cacheFilename += '_' + str(choices[param]['value'])
+			cacheFilename += '.cache'
+
+			if os.path.isfile('cache/' + cacheFilename):
+				tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
+			else:
+				tweets = preprocessTweets.preprocess(tweets, choices)
+				pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
+		
+
+	
+		featureObject = feature.createFeatureMatrix(tweets, choices)
+		featureMatrix = featureObject['featureMatrix']	
+	
+		errorFunc = crossVal.MeanSquaredError
+		result = crossVal.crossVal(tweets, scores, errorFunc, choices, featureMatrix)
+
+		for res in result:
+			outputFile.write(str(res) + ",")
+		outputFile.write(str(sum(result)/len(result)) + "\n")
+		outputFile.close()
+
 if __name__ == "__main__":
 	filename = ''
 	if(len(sys.argv) >= 2):
