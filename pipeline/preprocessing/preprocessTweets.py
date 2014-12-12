@@ -162,7 +162,7 @@ def preprocess(tweet_list, choices):
 		#STEMMERS SECTION
 		if((choices['pre_automated_gramma_corector']['value'] == 1) and 
 			(choices['pre_automated_gramma_corector_first']['value'] == 1)):
-			do_automated_gramma_corector(tweet)
+			tweet = do_automated_gramma_corector(tweet)
 			
 
 
@@ -266,7 +266,7 @@ def preprocess(tweet_list, choices):
 		
 		if((choices['pre_automated_gramma_corector']['value'] == 1) and 
 			(choices['pre_automated_gramma_corector_first']['value'] == 0)):
-			do_automated_gramma_corector(tweet)
+			tweet = do_automated_gramma_corector(tweet)
 			
 
 		#END OF STEMMERS SECTION
