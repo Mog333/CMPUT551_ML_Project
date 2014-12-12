@@ -1,6 +1,59 @@
-%!TEX root = ../report.tex
+%!TEX root = ../report_nips.tex
 \subsection{pp1} % (fold)
 \label{sub:pp1}
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{table}[t]
+\caption{Sample table title}
+\label{sample-table}
+\begin{center}
+\begin{tabular}{l | L{4cm} | L{2cm} | L{2cm} | l}
+\multicolumn{1}{c}{\bf NAME}  &\multicolumn{1}{c}{\bf DEFINITION} &\multicolumn{2}{c}{\bf EXAMPLE} &\multicolumn{1}{c}{\bf UNIQUE TOKENS}\\
+\multicolumn{2}{c}{}  &\multicolumn{1}{c}{\tiny BEFORE} &\multicolumn{1}{c}{\tiny AFTER} &\multicolumn{1}{c}{\bf COUNT}
+\\ \hline 
+
+Convert to lowercase &
+Converts all characters from a word to lowercase &
+PLEASE &
+please &
+20092 \\ \hline
+
+\multirow{5}{*}{Remove apostrophe} &
+\multirow{2}{4cm}{Removes apostrophe and return the original words for most common cases where apostrophe is used as vowel substitution} &
+you're &
+you are &
+\multirow{5}{*}{22718} \\[.6cm]
+&&I've & I have & \\[.6cm] \hline
+
+
+De-elongate words &
+Convert elongated words to normal version (works in combination with automated grammar corrector &
+pleeeeeeese &
+pleease (please – after grammar corrector) &
+22640 \\ \hline
+
+
+\multirow{9}{*}{Remove stop words} &
+\multirow{3}{4cm}{There does not exist a single definition of stop words. For our task stop words are words which do not have any sentimental load. We used the stop word list from nltk corpus except words “no” and “not”
+under} &
+under & &
+\multirow{9}{*}{22640}\\[.4cm]
+&&before&&\\[.4cm]
+&&very&&\\[.4cm]
+&&to&&\\[.4cm] \hline
+
+
+
+\end{tabular}
+\end{center}
+\end{table}
+
 
 % subsection pp1 (end)
 

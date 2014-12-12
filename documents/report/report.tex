@@ -7,7 +7,15 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
 \usetikzlibrary{positioning,arrows}
+
+\tikzstyle{process} = [rectangle, rounded corners, minimum height=1cm, text centered, text width=2cm, draw=black, font=\scriptsize]
+\tikzstyle{state} = [ellipse, minimum height=1cm, text centered, text width=1.5cm, draw=black, font=\scriptsize]
+\tikzstyle{description} = [rectangle, minimum height=1.5cm, text centered, text width=3.5cm, draw=black, font=\scriptsize]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{line} = [thick,--,>=stealth]
 
 \def\ex#1{\hbox{\tt #1}}
 
@@ -15,7 +23,9 @@
 \begin{document}
 \begin{center}\Large
         CMPUT 551 --- Project Report\\
-        ~\\
+        Sentiment Analysis in Figurative Language\\
+        \tiny (Using Twitter Data)\\
+        \vspace{0.30in}
         \small
         \begin{tabular}{@{}ll}
         Adam St. Arnaud &-~~ ajstarna@ualberta.ca\\
@@ -27,9 +37,9 @@
         
 \end{center}
 \begin{tabular}{@{}ll}
-Instructor:     & Prof. R. Greiner \\
+Instructor: & Prof. R. Greiner \\
 Supervisor: & Dr. Greg Kondrak\\
-Date:       & Friday, 12/Dec/2014
+Date: & Friday, 12/Dec/2014
 \end{tabular}
 
 

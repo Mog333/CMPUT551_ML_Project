@@ -1,4 +1,4 @@
-%!TEX root = ../report.tex
+%!TEX root = ../report_nips.tex
 \subsection{n-Grams} % (fold)
 \label{sub:n_grams}
 
@@ -8,6 +8,41 @@
 \label{sub:part_of_speec_}
 
 One of the most fundamental parts of the linguistic pipeline is the part-of-speech (POS) tagging, a basic form of syntactic analysis which has countless applications in Natural Language Processing (NLP). We studied some of the best POS tagging tools \& settled on using Tweet NLP, a twitter specific POS tagger. We’ve used part-of-speech tagging as a feature for our task wherein every word/token in a given tweet is tagged based on its part-of-speech, some of which are twitter specific.
+
+\begin{figure}[ht]
+\centering 
+  \begin{tabular}{@{}l@{}}
+    \includegraphics[width=0.4\linewidth]{img/tags-final.png}
+  \end{tabular} 
+  \caption{caption msdbkjsghsg} 
+  \label{fig:tags_final} 
+\end{figure}
+
+\begin{table}[t]
+\caption{Sample table title}
+\label{sample-table}
+\begin{center}
+\begin{tabular}{lll}
+\multicolumn{1}{c}{\bf TAG}  &\multicolumn{1}{c}{\bf DESCRIPTION} &\multicolumn{1}{c}{\bf EXAMPLES}
+\\ \hline \\
+O & pronoun & it you u me \\
+N & common noun & central park\\
+V & verb & amuse attach\\
+A & adjective & good fav lil\\
+R & adverb & 2 ( i.e. too)\\
+D & determiner & the the it's its\\
+P & pre or postposition & 4 (i.e. for)\\
+\# & hashtags & \#ualberta, \#ml\\
+@ & at-mentions & @USA @Ualberta\\
+\textasciitilde & discourse markers & RT for retweets\\
+U & URL or email address & http://bit.ly/abc\\
+E & emoticons & :-) :( :P :O\\
+, & punctuations & !!! \dots ?!?!\\
+! & interjections & lol haha ftw yea\\
+\textasciicircum & proper noun & John USA Ipad\\
+\end{tabular}
+\end{center}
+\end{table}
 
 For our task, we selected 15 of the most common tags in linguistics (including the twitter specific tags). we made a count of the number of tagged tokens (with a confidence score > 0.9) in a tweet \& then used that as a feature.[rough work]
 
