@@ -2,6 +2,18 @@
 \subsection{n-Grams} % (fold)
 \label{sub:n_grams}
 
+N-Grams are one of the most used features in NLP as they can be used to describe meaningful collections of words - a desirable trait for many contexts. Formally an n-gram is a contiguous sequence of $n$ items taken from a larger sequence. In the context of NLP, a n-gram can take on the form of $n$ characters, syllables, words, or even phonemes.
+
+	To best understand how meaning can be translated in a n-gram lets consider an example. A unigram is a n-gram for $n = 1$. This is the most basic n gram where you consider each item separately. In our application unigrams form the base features, and are actually the most important features in our pipeline. As an example, a tweet such as: “I hate work” would generate three features, (“I”), (“hate”), and (“work”). In the context of sentiment analysis the individual words can carry sentiment, as such the feature (“hate”) can be an important feature to predict the sentiment of the whole tweet. 
+
+	Bigrams are the next n-gram we explored, where $n = 2$. These features are all sequence pairings or words in a tweet. Again with the example: “I hate work”, we would generate two bigrams: (“I hate”) and (“hate work”). The intuition behind using bigrams as a feature is that bigrams like (“I hate”) carry a different sentiment value than simple the words separately. Additionally, words that don’t necessarily communicate sentiment by themselves would carry sentiment when considered together, such as (“this sucks”).
+
+	N-grams with $n \geq 3$ are not considered as the number of unique trigrams and above combinatorially explode. Here we can imagine trigrams carry unique sentiment again, but its difficult for our algorithm to pick this up as the frequency of such trigrams is low and we don’t hand pick which ones we think would work best.
+
+	To build a feature vector from a set of documents all containing a set of n-grams we add each gram to a bag of words dictionary. Then when a feature vector is created for a tweet we look up the unique place within that dictionary for each gram in order to determine which dimension to increment the count of that gram. 
+
+	In building our feature vectors we only considered the frequency of the grams, instead of the just the 0/1 presence or the td-idf (term frequency-inverse document frequency). In doing this our n-gram implementation can also be used to pick up and count the number of special tokens we have inserted such as special mapped tokens from preprocessing, and POS tags.
+
 % subsection n_grams (end)
 
 \subsection{Part of Speec (POS) Tagging} % (fold)
