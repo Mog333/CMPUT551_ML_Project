@@ -22,10 +22,10 @@ def createFeatureVecFromTweet(tweet, bow_dict, choices):
 		sf.setFeatureVecForSenti(tweet, featureVec, bow_dict, sentiDict)
 	if choices['use_counterFact']['value'] == 1:
 		cfList = ironyF.createListFromFile("../Irony/counterFactuality.txt")
-		ironyF.setFeatureVecForRatio(tweets[i], featureMatrix[i], bow_dict, cfList, "*&CounterFactuality")
+		ironyF.setFeatureVecForRatio(tweet, featureVec, bow_dict, cfList, "*&CounterFactuality")
 	if choices['use_temporalComp']['value'] == 1:
 		tcList = ironyF.createListFromFile("../Irony/temporalCompression.txt")
-		ironyF.setFeatureVecForRatio(tweets[i], featureMatrix[i], bow_dict, tcList, "*&TemporalCompression")
+		ironyF.setFeatureVecForRatio(tweet, featureVec, bow_dict, tcList, "*&TemporalCompression")
 
 	return featureVec
 

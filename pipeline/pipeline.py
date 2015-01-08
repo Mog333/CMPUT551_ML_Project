@@ -40,12 +40,45 @@ def predictUsingModel(modelObject, tweet):
 	featureVec = feature.createFeatureVecFromTweet(tweet, modelObject['featureObject']['dict'], modelObject['choices'])
 	return {'prediction':modelObject['model'].predict(featureVec), 'tweet': tweet}
 
+def runFinalTest(iniFile="final.ini", trainingTweets="tweets.txt", testTweets="finalTweets.txt", scoresFile = "scores.txt",
+scoreFileName="finalScore.txt"):
+    choices = pipeline_tools.buildChoiceArray()
+    choices = pipeline_tools.ask(choices, ini_filename = iniFile)
+
+    tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) , trainingTweets)
+    scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) , scoresFile)
+    
+    tweets = preprocessTweets.preprocess(tweets, choices)
+    featureObject = feature.createFeatureMatrix(tweets, choices)
+    featureMatrix = featureObject['featureMatrix']
+
+    modelDict = {0: 'linear', 1: 'rbf', 2:'poly'}
+    modelType = modelDict[choices['svm_model']['value']]
+    modelDegree = choices['svm_degree']['value']
+
+    clf = svm.SVR(modelType, degree = modelDegree)
+    clf.fit(featureMatrix, scores)
+    modelObject = {'model':clf, "featureObject":featureObject, 'choices':choices}
+
+    scoreOutput = open(scoreFileName, "w")
+    finalTweets = open(testTweets, "r")
+    
+    for line in finalTweets:
+        processedTweet = preprocessTweets.preprocess([line], modelObject['choices'])[0]
+        featureVec = feature.createFeatureVecFromTweet(processedTweet, modelObject['featureObject']['dict'], modelObject['choices'])
+        prediction = modelObject['model'].predict(featureVec)
+        scoreOutput.write(str(prediction))
+    scoreOutput.close()
+    finalTweets.close()
+    return modelObject
+
+
 def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 'scores.txt'):
 	choices = pipeline_tools.buildChoiceArray()
 	choices = pipeline_tools.ask(choices, ini_filename = filename)
 
-	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value'] + 50) , tweetsFile)
-	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value'] + 50) , scoresFile)
+	tweets = pt.getTweetsFromFile( int(choices['num_examples']['value']) , tweetsFile)
+	scores = pt.getTweetScoresFromFile( int(choices['num_examples']['value']) , scoresFile)
 
 	if(choices['preprocessing']['value']):
 		t0 = time.time()
@@ -61,13 +94,8 @@ def trainModelForTesting(filename = '', tweetsFile = 'tweets.txt', scoresFile = 
 
 		if os.path.isfile('cache/' + cacheFilename):
 			tweets = pickle.load(open('cache/' + cacheFilename,'rb'))
-			tweets = tweets[50:]
-			scores = scores[50:]
-
 			print 'Cached preprocessing file used!'
 		else:
-			tweets = tweets[50:]
-			scores = scores[50:]
 			tweets = preprocessTweets.preprocess(tweets, choices)
 			pickle.dump(tweets, open('cache/' + cacheFilename,'wb') )
 			print 'Cache file written'
